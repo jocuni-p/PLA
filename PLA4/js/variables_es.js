@@ -1,0 +1,6 @@
+var nombre = "Nombre"
+var email = "Email"
+var introduzca = "Por favor, introduzca una dirección de correo válida."
+var mensaje = "Mensaje"
+var privacidad = "Es obligatorio aceptar la normativa de privacidad"
+var revise = "Por favor revise los siguientes datos:\n\n"

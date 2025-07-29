@@ -1,0 +1,6 @@
+var nombre = "Nom"
+var email = "Email"
+var introduzca = "Si us plau introdueixi una adreça de correu electrónic vàlida."
+var mensaje = "Missatge"
+var privacidad = "Es obligatori acceptar la normativa de privacitat"
+var revise = "Si us plau revisi les següents dades:\n\n"
