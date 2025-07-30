@@ -5,44 +5,45 @@ require_once 'traits/GuardarFichero.php'; //trait
 
 
 //clase heredera y final (no tendra clases herederas)
-final class EmpleadoFijo extends Empleado {
+final class EmpleadoHoras extends Empleado {
 
-	private int $anyAlta;
+	private const PRECIO_HORA = 9.39;
+	private int $horastrabajadas;
 
 	//trait
 	use GuardarFichero;
 
 
-	public function __construct($nif, $nombre, $edad, $departamento, $anyAlta) {
+	public function __construct($nif, $nombre, $edad, $departamento, $horastrabajadas) {
 		//informamos de los atributos comunes con su clase padre
 		parent::__construct($nif, $nombre, $edad, $departamento);
-		$this->setAnyAlta($anyAlta);
+		$this->setHorasTrabajadas($horastrabajadas);
 		$this->altaEmpleado(); // llamada a metodo 
 	}
 
 
-	public function getAnyAlta(): int {return $this->anyAlta;}
-	public function setAnyAlta($anyAlta): void {
-		if (empty($anyAlta) || !is_numeric($anyAlta) || ($anyAlta < 1950 || $anyAlta > 2026)) {
-			throw new Exception("Año alta no informado o invalido<br>");
+	public function getHorasTrabajadas(): int {return $this->horastrabajadas;}
+	public function setHorasTrabajadas($horastrabajadas): void {
+		if (empty($horastrabajadas) || !is_numeric($horastrabajadas) || ($horastrabajadas <= 0)) {
+			throw new Exception("Horas trabajadas: no informado o invalido<br>");
 		}
-		$this->anyAlta = $anyAlta;
+		$this->horastrabajadas = $horastrabajadas;
 	}
 
 	//Implementacion del metodo polimorfico para esta clase
 	public function calcularSueldo(): float {
-		return self::BASE + (self::COMPLEMENTO * (date("Y") - $this->anyAlta));
+		return self::PRECIO_HORA * $this->horastrabajadas;
 	}
 
 	// Ampliacion del metodo de la superclase
 	public function mostrarDatos(): string {
 		$empleado = parent::mostrarDatos();
 //		echo "$empleado, Fecha de alta: $this->anyAlta"; // DEBUG
-		return "$empleado, Fecha alta: $this->anyAlta";
+		return "$empleado, $this->horastrabajadas";
 	}
 
 	private function altaEmpleado(): void {
-		$datosEmp = 'Empleado fijo;' . parent::datosEmpleadoCsv() . ';' . $this->anyAlta;
+		$datosEmp = 'Empleado horas;' . parent::datosEmpleadoCsv() . ';' . $this->horastrabajadas;
 //		echo "$datosEmp"; // DEBUG
 		$this->guardar($datosEmp); // llamamos al trait como a un metodo de este objeto (this)
 	}

@@ -15,8 +15,8 @@ abstract class Empleado {
 	private string $departamento;
 
 	//Constructor por delegacion (con setters)
-	public function __construct(string $nif, string $nombre, int $edad, string $departamento) {
-		$this->setNif($nif);
+	public function __construct($nif, $nombre, $edad, $departamento) {
+		$this->setNif($nif); // Si usamos el setter en el constructor, esta protegido por la exception
 		$this->setNombre($nombre);
 		$this->setEdad($edad);
 		$this->setDepartamento($departamento);
@@ -28,39 +28,39 @@ abstract class Empleado {
 	public function getEdad(): int {return $this->edad;}
 	public function getDepartamento(): string {return $this->departamento;}
 
-	public function setNif(string $nif): void {
+	public function setNif($nif): void {
 		if (empty($nif) || !preg_match('/^\d{8}[A-Za-z]$/', $nif)) {
-			throw new Exception("Nif obligatorio o invalido");
+			throw new Exception("Nif obligatorio o invalido<br>");
 		}
 		$this->nif = $nif;
 	}
-	public function setNombre(string $nombre): void {
+	public function setNombre($nombre): void {
 		if (empty($nombre) || !preg_match('/^[\p{L}\s\-]+$/u', $nombre)) {
-			throw new Exception("Nombre obligatorio o invalido");
+			throw new Exception("Nombre obligatorio o invalido<br>");
 		}
 		$this->nombre = $nombre;
 	}
-	public function setEdad(int $edad): void {
-		if (empty($edad) || $edad < 18) {
-			throw new Exception("Edad obligatoria o invalida");
+	public function setEdad($edad): void {
+		if (empty($edad) || !is_numeric($edad) || $edad < 18 || $edad > 70) {
+			throw new Exception("Edad obligatoria o invalida<br>");
 		}
 		$this->edad = $edad;
 	}
-	public function setDepartamento(string $departamento): void {
+	public function setDepartamento($departamento): void {
 		if (empty($departamento)) {
-			throw new Exception("Departamento obligatorio");
+			throw new Exception("Departamento obligatorio<br>");
 		}
 		$this->departamento = $departamento;
 	}
 
 	//-------OTROS METODOS---------
-	//metodo abstracto: se implementara en TODAS las classes herederas
+	//metodo abstracto/polimorfico se implementara en TODAS las classes herederas
 	public abstract function calcularSueldo(): float;
 
 	// metodo para mostrar todos los atributos de la clase
 	//al usar concatenacion el atributo tipo 'int' se convierte automaticamente a 'string'
 	public function mostrarDatos(): string {
-		return "Datos empleado: " .
+		return "Datos: " .
 				$this->getNif(). ", " .
 				$this->getNombre(). ", " .
 				$this->getEdad(). ", " .
