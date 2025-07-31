@@ -6,21 +6,22 @@ error_reporting(E_ALL);
 
 	require_once 'clases/empleadofijo.php';
 	require_once 'clases/empleadohoras.php';
-//	require_once 'clases/empleadotemporal.php';
+	require_once 'clases/empleadotemporal.php';
 
-	//inicializar variables
+	//DECLARACION/INICIALIZACION VARIABLES
 	$datos_fijo = '';
 	$sueldo_fijo = null;
 	$datos_horas = '';
 	$sueldo_horas = null;
+	$datos_temporal = '';
+	$sueldo_temporal = null;
 
-	//incorporar los namespaces con use
+	//incorporar los namespaces con use (OPCIONAL)
 
-	//quizas convendria un bloque try_catch para cada instanciacion
+	//quizas convendria un bloque try_catch para cada instanciacion ????
 	//INSTANCIA EMPLEADO FIJO
 	try {
-		//instanciar un emleado de cada clase
-		$fijo = new EmpleadoFijo('44444444N', 'Joan Carles', '25', 'Produccion', '2022');
+		$fijo = new EmpleadoFijo('44444444N', 'Alonso Quijano', 'rr', 'Creatividad', '');
 		$datos_fijo = $fijo->mostrarDatos();
 		$sueldo_fijo = $fijo->calcularSueldo();
 	} catch (Exception $error) {
@@ -29,10 +30,18 @@ error_reporting(E_ALL);
 
 	// INSTANCIA EMPLEADO HORAS
 	try {
-		//instanciar un emleado de cada clase
-		$horas = new EmpleadoHoras('77666555F', 'Jaume Canibell', '35', 'Logistica', '120');
+		$horas = new EmpleadoHoras('77666555F', 'Jaume Canibell', '55', 'Porteria', '120');
 		$datos_horas = $horas->mostrarDatos();
 		$sueldo_horas = $horas->calcularSueldo();
+	} catch (Exception $error) {
+		echo $error->getMessage();
+	}
+
+	// INSTANCIA EMPLEADO TEMPORAL
+	try {
+		$temporal = new EmpleadoTemporal('77666555F', 'Placido Alonso', '0', 'Transporte', '30/12/2024', '30/06/2025');
+		$datos_temporal = $temporal->mostrarDatos();
+		$sueldo_temporal = $temporal->calcularSueldo();
 	} catch (Exception $error) {
 		echo $error->getMessage();
 	}
@@ -74,8 +83,9 @@ error_reporting(E_ALL);
 		<h3>Empleado Temporal</h3>
 		<?php
 			//mostrar todos los datos del empleado temporal
-			
+			echo "<p>$datos_temporal</p>";
 			//ejecutar el método de calculo de salario
+			echo "<p>Salario: $sueldo_temporal</p>";
 		?>
 	</div>
 	<table>

@@ -23,6 +23,7 @@ final class EmpleadoHoras extends Empleado {
 
 
 	public function getHorasTrabajadas(): int {return $this->horastrabajadas;}
+
 	public function setHorasTrabajadas($horastrabajadas): void {
 		if (empty($horastrabajadas) || !is_numeric($horastrabajadas) || ($horastrabajadas <= 0)) {
 			throw new Exception("Horas trabajadas: no informado o invalido<br>");
@@ -32,19 +33,17 @@ final class EmpleadoHoras extends Empleado {
 
 	//Implementacion del metodo polimorfico para esta clase
 	public function calcularSueldo(): float {
-		return self::PRECIO_HORA * $this->horastrabajadas;
+		return self::PRECIO_HORA * $this->getHorasTrabajadas();
 	}
 
 	// Ampliacion del metodo de la superclase
 	public function mostrarDatos(): string {
 		$empleado = parent::mostrarDatos();
-//		echo "$empleado, Fecha de alta: $this->anyAlta"; // DEBUG
-		return "$empleado, $this->horastrabajadas";
+		return "$empleado.<br>Horas trabajadas: " . $this->getHorasTrabajadas();
 	}
 
 	private function altaEmpleado(): void {
-		$datosEmp = 'Empleado horas;' . parent::datosEmpleadoCsv() . ';' . $this->horastrabajadas;
-//		echo "$datosEmp"; // DEBUG
+		$datosEmp = 'Empleado horas;' . parent::datosEmpleadoCsv() . ';' . $this->getHorasTrabajadas();
 		$this->guardar($datosEmp); // llamamos al trait como a un metodo de este objeto (this)
 	}
 }

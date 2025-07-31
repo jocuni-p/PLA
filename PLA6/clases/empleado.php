@@ -57,7 +57,7 @@ abstract class Empleado {
 	//metodo abstracto/polimorfico se implementara en TODAS las classes herederas
 	public abstract function calcularSueldo(): float;
 
-	// metodo para mostrar todos los atributos de la clase
+	// metodo para mostrar todos los atributos de la clase CON DELEGACION
 	//al usar concatenacion el atributo tipo 'int' se convierte automaticamente a 'string'
 	public function mostrarDatos(): string {
 		return "Datos: " .

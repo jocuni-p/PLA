@@ -24,26 +24,24 @@ final class EmpleadoFijo extends Empleado {
 	public function getAnyAlta(): int {return $this->anyAlta;}
 	public function setAnyAlta($anyAlta): void {
 		if (empty($anyAlta) || !is_numeric($anyAlta) || ($anyAlta < 1950 || $anyAlta > 2026)) {
-			throw new Exception("Año alta no informado o invalido<br>");
+			throw new Exception("Empleado Fijo: Año alta no informado o invalido<br>");
 		}
 		$this->anyAlta = $anyAlta;
 	}
 
 	//Implementacion del metodo polimorfico para esta clase
 	public function calcularSueldo(): float {
-		return self::BASE + (self::COMPLEMENTO * (date("Y") - $this->anyAlta));
+		return self::BASE + (self::COMPLEMENTO * (date("Y") - $this->getAnyAlta()));
 	}
 
 	// Ampliacion del metodo de la superclase
 	public function mostrarDatos(): string {
 		$empleado = parent::mostrarDatos();
-//		echo "$empleado, Fecha de alta: $this->anyAlta"; // DEBUG
-		return "$empleado, Fecha alta: $this->anyAlta";
+		return "$empleado.<br>Fecha alta: " . $this->getAnyAlta();
 	}
 
 	private function altaEmpleado(): void {
-		$datosEmp = 'Empleado fijo;' . parent::datosEmpleadoCsv() . ';' . $this->anyAlta;
-//		echo "$datosEmp"; // DEBUG
+		$datosEmp = 'Empleado fijo;' . parent::datosEmpleadoCsv() . ';' . $this->getAnyAlta();
 		$this->guardar($datosEmp); // llamamos al trait como a un metodo de este objeto (this)
 	}
 }
