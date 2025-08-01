@@ -3,7 +3,7 @@
 //Inicializacion de variables por si no se entra en la pagina desde el Formulario, para el html no lea variables no definidas
 $nif = $nombre = $apellidos = $email = $nota = $mensaje = $qualificacio = $cuadritos_html = '';
 $err_msg = '';
-$errores = [];
+$errores = [];  
 
 // Obtencion de datos mediante funcion isset() y operador de fusion de null ??
 if (isset($_POST['Enviar'])) { // Verifico si se ha pulsado el boton 'Enviar'

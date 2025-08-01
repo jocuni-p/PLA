@@ -42,7 +42,7 @@ elseif (isset($_POST['enviar'])) {
 			}
 		}
 		
-//		Validar coche
+//		  Validar coche
 		$diasCoche = $_POST['coche'] ?? null;
 		if ($diasCoche != 0) {
 			if (is_numeric($diasCoche) && ($diasCoche <= $nits && $diasCoche > 0)) {

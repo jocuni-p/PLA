@@ -1,7 +1,7 @@
 <?php
 	session_start(); // inicio sesion para acceder a la var global de la session
 	
-	//Recuperamos 'personas', mensajes y errores
+	 //Recuperamos 'personas', mensajes y errores
 	$personas = $_SESSION['personas'] ?? [];
 	$errores = $_SESSION['errores'] ?? [];
 	$msg = $_SESSION['msg'] ?? null;

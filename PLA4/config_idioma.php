@@ -1,6 +1,6 @@
 <?php
 
-// idioma por defecto
+//idioma por defecto
 $idioma = 'es';
 
 $idiomasPermitidos = array('es', 'ca');
