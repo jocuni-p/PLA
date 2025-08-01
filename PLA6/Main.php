@@ -1,12 +1,21 @@
 <?php
 
-// DEBUG PARA VER LOS ERRORES
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+	//PARA VER ERRORES EN DESARROLLO
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL);
 
-	require_once 'clases/empleadofijo.php';
-	require_once 'clases/empleadohoras.php';
-	require_once 'clases/empleadotemporal.php';
+	//INCLUSIONES MANUALES
+	require_once 'clases/EmpleadoFijo.php';
+	require_once 'clases/EmpleadoHoras.php';
+	require_once 'clases/EmpleadoTemporal.php';
+	require_once 'clases/Administracion.php';
+
+	//IMPORTAR CLASES CON SU NAMESPACE
+	use PLA6\clases\EmpleadoFijo;
+	use PLA6\clases\EmpleadoHoras;
+	use PLA6\clases\EmpleadoTemporal;
+	use PLA6\clases\Administracion;
+	use Exception;
 
 	//DECLARACION/INICIALIZACION VARIABLES
 	$datos_fijo = '';
@@ -15,31 +24,30 @@ error_reporting(E_ALL);
 	$sueldo_horas = null;
 	$datos_temporal = '';
 	$sueldo_temporal = null;
+	$empleados = [];
 
-	//incorporar los namespaces con use (OPCIONAL)
 
-	//quizas convendria un bloque try_catch para cada instanciacion ????
-	//INSTANCIA EMPLEADO FIJO
+	//INSTANCIA OBJ EMPLEADO FIJO
 	try {
-		$fijo = new EmpleadoFijo('44444444N', 'Alonso Quijano', 'rr', 'Creatividad', '');
+		$fijo = new EmpleadoFijo('11111111A', 'Alonso Quijano', 56, 'Creatividad', '2022');
 		$datos_fijo = $fijo->mostrarDatos();
 		$sueldo_fijo = $fijo->calcularSueldo();
 	} catch (Exception $error) {
 		echo $error->getMessage();
 	}
 
-	// INSTANCIA EMPLEADO HORAS
+	// INSTANCIA OBJ EMPLEADO HORAS
 	try {
-		$horas = new EmpleadoHoras('77666555F', 'Jaume Canibell', '55', 'Porteria', '120');
+		$horas = new EmpleadoHoras('55555555F', 'Jaume Canibell', 55, 'Direccion', '120');
 		$datos_horas = $horas->mostrarDatos();
 		$sueldo_horas = $horas->calcularSueldo();
 	} catch (Exception $error) {
 		echo $error->getMessage();
 	}
 
-	// INSTANCIA EMPLEADO TEMPORAL
+	// INSTANCIA OBJ EMPLEADO TEMPORAL
 	try {
-		$temporal = new EmpleadoTemporal('77666555F', 'Placido Alonso', '0', 'Transporte', '30/12/2024', '30/06/2025');
+		$temporal = new EmpleadoTemporal('66666666T', 'Gabino Quintanilla', 36, 'Marketing', '30/01/2024', '30/06/2025');
 		$datos_temporal = $temporal->mostrarDatos();
 		$sueldo_temporal = $temporal->calcularSueldo();
 	} catch (Exception $error) {
@@ -47,7 +55,7 @@ error_reporting(E_ALL);
 	}
 
 	//consulta de todos los empleados
-
+	$empleados = Administracion::consultaEmpleados();
 
 ?>
 <!DOCTYPE html>
@@ -63,33 +71,29 @@ error_reporting(E_ALL);
 <body>
 	<div class='empleados'>
 		<h3>Empleado Fijo</h3>
-		<?php
-			//mostrar todos los datos del empleado fijo
-			echo "<p>$datos_fijo</p>";
-			//ejecutar el método de calculo de salario
-			echo "<p>Salario: $sueldo_fijo</p>";
-		?>
+		<p><?= $datos_fijo ?></p>
+		<p>Salario: <?= $sueldo_fijo ?></p>
 	</div>
 	<div class='empleados'>
 		<h3>Empleado Horas</h3>
-		<?php
-			//mostrar todos los datos del empleado horas
-			echo "<p>$datos_horas</p>";
-			//ejecutar el método de calculo de salario
-			echo "<p>Salario: $sueldo_horas</p>";
-		?>
+		<p><?= $datos_horas ?></p>
+		<p>Salario: <?= $sueldo_horas ?></p>
 	</div>
 	<div class='empleados'>
 		<h3>Empleado Temporal</h3>
-		<?php
-			//mostrar todos los datos del empleado temporal
-			echo "<p>$datos_temporal</p>";
-			//ejecutar el método de calculo de salario
-			echo "<p>Salario: $sueldo_temporal</p>";
-		?>
+		<p><?= $datos_temporal ?></p>
+		<p>Salario: <?= $sueldo_temporal ?></p>
 	</div>
 	<table>
-		
+		<?php
+			foreach (($empleados ?? []) as $empleado) { 
+				echo "<tr>"; // Esto abre una fila HTML en la tabla
+				foreach ($empleado as $dato) { 
+					echo "<td>$dato</td>"; // Cada dato se imprime como una celda HTML
+				}
+				echo "</tr>"; // Se cierra la fila HTML
+			}
+		?>
 	</table>
 </body>
 </html>

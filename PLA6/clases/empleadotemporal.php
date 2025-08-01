@@ -1,9 +1,15 @@
 <?php
 
+namespace PLA6\clases;
+
 require_once 'Empleado.php'; // superclase
 require_once 'traits/GuardarFichero.php'; //trait
-require_once 'funciones/validarfecha.php';
+require_once 'funciones/ValidarFecha.php';
 
+use PLA6\clases\Empleado;
+use PLA6\traits\GuardarFichero;
+use Exception;
+use function PLA6\funciones\ValidarFecha;
 
 //clase heredera y final (no tendra clases herederas)
 final class EmpleadoTemporal extends Empleado {
@@ -30,13 +36,13 @@ final class EmpleadoTemporal extends Empleado {
 
 	public function setFechaAlta($fechaAlta): void {
 		if (empty($fechaAlta) || !validarFecha($fechaAlta)) {
-			throw new Exception("Fecha de alta: no informado o invalido<br>");
+			throw new Exception("Empleado Temporal: Fecha de alta no informada o invalida<br>Formato fecha: dd/mm/yyyy<br>");
 		}
 		$this->fechaAlta = $fechaAlta;
 	}
 	public function setFechaBaja($fechaBaja): void {
 		if (empty($fechaBaja) || !validarFecha($fechaBaja)) {
-			throw new Exception("Fecha de baja: no informado o invalido<br>");
+			throw new Exception("Empleado Temporal: Fecha de baja no informada o invalida<br>");
 		}
 		$this->fechaBaja = $fechaBaja;
 	}
@@ -50,13 +56,12 @@ final class EmpleadoTemporal extends Empleado {
 	// Ampliacion del metodo de la superclase
 	public function mostrarDatos(): string {
 		$empleado = parent::mostrarDatos();
-		return "$empleado.<br>Periodo trabajado: " . $this->getFechaAlta() . $this->getFechaBaja();
+		return "$empleado Periodo trabajado: " . $this->getFechaAlta() . $this->getFechaBaja();
 	}
 
 	private function altaEmpleado(): void {
 		$datosEmp = 'Empleado temporal;' . parent::datosEmpleadoCsv() . ';' . $this->getFechaAlta() . ';' . $this->getFechaBaja();
-//		echo "$datosEmp"; // DEBUG
-		$this->guardar($datosEmp); // llamamos al trait como a un metodo de este objeto (this)
+		$this->guardar($datosEmp); // llamamos al trait como si fuese un metodo propio (this)
 	}
 }
 ?>

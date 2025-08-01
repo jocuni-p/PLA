@@ -1,7 +1,13 @@
 <?php
 
+namespace PLA6\clases;
+
 require_once 'Empleado.php'; // superclase
 require_once 'traits/GuardarFichero.php'; //trait
+
+use PLA6\clases\Empleado;
+use PLA6\traits\GuardarFichero;
+use Exception;
 
 
 //clase heredera y final (no tendra clases herederas)
@@ -17,7 +23,7 @@ final class EmpleadoFijo extends Empleado {
 		//informamos de los atributos comunes con su clase padre
 		parent::__construct($nif, $nombre, $edad, $departamento);
 		$this->setAnyAlta($anyAlta);
-		$this->altaEmpleado(); // llamada a metodo 
+		$this->altaEmpleado(); // llamada a metodo propio
 	}
 
 
@@ -37,7 +43,7 @@ final class EmpleadoFijo extends Empleado {
 	// Ampliacion del metodo de la superclase
 	public function mostrarDatos(): string {
 		$empleado = parent::mostrarDatos();
-		return "$empleado.<br>Fecha alta: " . $this->getAnyAlta();
+		return "$empleado Fecha alta: " . $this->getAnyAlta();
 	}
 
 	private function altaEmpleado(): void {

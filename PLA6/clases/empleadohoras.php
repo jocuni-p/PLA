@@ -1,7 +1,13 @@
 <?php
 
+namespace PLA6\clases;
+
 require_once 'Empleado.php'; // superclase
 require_once 'traits/GuardarFichero.php'; //trait
+
+use PLA6\clases\Empleado;
+use PLA6\traits\GuardarFichero;
+use Exception;
 
 
 //clase heredera y final (no tendra clases herederas)
@@ -18,7 +24,7 @@ final class EmpleadoHoras extends Empleado {
 		//informamos de los atributos comunes con su clase padre
 		parent::__construct($nif, $nombre, $edad, $departamento);
 		$this->setHorasTrabajadas($horastrabajadas);
-		$this->altaEmpleado(); // llamada a metodo 
+		$this->altaEmpleado(); // llamada a metodo propio
 	}
 
 
@@ -26,7 +32,7 @@ final class EmpleadoHoras extends Empleado {
 
 	public function setHorasTrabajadas($horastrabajadas): void {
 		if (empty($horastrabajadas) || !is_numeric($horastrabajadas) || ($horastrabajadas <= 0)) {
-			throw new Exception("Horas trabajadas: no informado o invalido<br>");
+			throw new Exception("Empleado Horas: Horas trabajadas no informado o invalido<br>");
 		}
 		$this->horastrabajadas = $horastrabajadas;
 	}
@@ -39,7 +45,7 @@ final class EmpleadoHoras extends Empleado {
 	// Ampliacion del metodo de la superclase
 	public function mostrarDatos(): string {
 		$empleado = parent::mostrarDatos();
-		return "$empleado.<br>Horas trabajadas: " . $this->getHorasTrabajadas();
+		return "$empleado Horas trabajadas: " . $this->getHorasTrabajadas();
 	}
 
 	private function altaEmpleado(): void {

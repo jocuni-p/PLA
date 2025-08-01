@@ -1,5 +1,9 @@
 <?php
 
+namespace PLA6\traits;
+
+use Exception;
+
 trait GuardarFichero {
 	private function guardar(string $lineatexto_csv): void {
 		// abrir en modo Solo escritura. Añade al final. Crea si no existe.
