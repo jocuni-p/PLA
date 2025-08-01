@@ -1,7 +1,7 @@
 
 # Curso de Desarrollo BackEnd - Ejercicios y Proyectos
 
-¡Bienvenido/a a mi repositorio de ejercicios y proyectos del curso de **Desarrollo Web BackEnd** (IFCD54 - Nivel 3, 300 horas).
+¡Bienvenido/a a mi repositorio de ejercicios y proyectos del curso de **Desarrollo Web BackEnd** (SOC - IFCD54 - Nivel 3, 300 horas).
 Aquí encontrarás todos los trabajos prácticos, ejemplos y proyectos desarrollados durante el curso, donde se abordan las siguientes tecnologías y conceptos:
 
 - **PHP** en paradigma estructurado y orientado a objetos.
