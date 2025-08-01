@@ -4,26 +4,25 @@ final class Administracion {
 
 
 	public static function consultaEmpleados():array {
-		//Abrir el fichero ficheros/personas.csv en modo lectura.
 
-		//Crear un array vacio para ir guardando una fila 
-		//por cada persona que leeremos del fichero.
+		//Crear un array para guardar las filas de datos.
+		$arr_empleados = [];
 
-		//Leemos el fichero linea a linea mientras no lleguemos al final del mismo:
-		while (!feof($fichero)) {
-
-
+		//Abrir el fichero en modo lectura.
+		$fichero = fopen("ficheros/empleados.csv", "r");
+		if ($fichero === false) {
+			throw new Exception("Error al abrir el fichero 'Empleados' para lectura.");
 		}
-		//transformar cada una de las filas del fichero y que se 
-		//encuetran en formato csv, en un array escalar:
-		$empleado = fgetcsv($fichero, 0, ';');
 
-		//Guardamos cada fila en el array vacio que hemos creado antes
-		array_push($empleados, $empleado);
-
-		//retornamos el arry para que lo podemos utilizar en el programa principal
-		return $empleados;
-
+		//Leer el fichero linea a linea
+		while (($empleado = fgetcsv($fichero, 0, ';')) !== false) {
+			//Guardamos cada fila en un array 
+			array_push($arr_empleados, $empleado);
+//			array($arr_empleados, $empleado);
+		}
+		fclose($fichero);
+				
+		return $arr_empleados;
 	}
 }
 
