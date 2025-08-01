@@ -2,13 +2,13 @@
 
 abstract class Empleado {
 
-	//--------CONSTANTES--------
+	//--------CONSTANTES---------
 	//php infiere el tipo automaticamente
 	//visibles para las clases herederas
 	protected const BASE = 1091.13;
 	protected const COMPLEMENTO = 192.95;
 
-	//-------ATRIBUTOS--------
+	//-------ATRIBUTOS---------
 	private string $nif;
 	private string $nombre;
 	private int $edad;
