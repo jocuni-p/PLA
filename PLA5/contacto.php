@@ -1,7 +1,7 @@
 <?php
 	const CHAR_CODE = "A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Z5";
 
-	    //inicializar variables
+	//inicializar variables
 	
 	//comprobar si se ha pulsado el botón de enviar
 	
