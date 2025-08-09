@@ -1,7 +1,7 @@
-```markdown
-# README - PLA 07: Gestión Escolar (BD)
 
-## 📚 Qué aprendí
+# README - PLA 07: Gestión Bases de Datos Relacionales
+
+
 
 ### Diseño de BD Relacional
 - Modelé entidades (Profesor, Alumno, Asignatura, Clase) y sus relaciones (1:N, N:M)
@@ -16,6 +16,9 @@
 ### Tecnologías utilizadas
 - `diagrams.net` para diseño del diagrama ER
 - `phpMyAdmin` para implementación en MySQL
+
+<img width="1461" height="639" alt="Captura de pantalla 2025-08-09 a las 23 02 47" src="https://github.com/user-attachments/assets/bb848188-d33f-48a2-87ae-c1dcc4d43196" />
+
 
 ## 🛠️ Cómo visualizar el proyecto
 
