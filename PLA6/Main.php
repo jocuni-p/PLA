@@ -29,7 +29,7 @@
 
 	//INSTANCIA OBJ EMPLEADO FIJO
 	try {
-		$fijo = new EmpleadoFijo('11111111A', 'Alonso Quijano', 56, 'Creatividad', '2022');
+		$fijo = new EmpleadoFijo('', 'Alonso Quijano', 56, 'Creatividad', '2022');
 		$datos_fijo = $fijo->mostrarDatos();
 		$sueldo_fijo = $fijo->calcularSueldo();
 	} catch (Exception $error) {
