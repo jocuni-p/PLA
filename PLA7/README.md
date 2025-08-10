@@ -17,7 +17,8 @@
 - `diagrams.net` para diseño del diagrama ER
 - `phpMyAdmin` para implementación en MySQL
 
-<img width="1461" height="639" alt="Captura de pantalla 2025-08-09 a las 23 02 47" src="https://github.com/user-attachments/assets/bb848188-d33f-48a2-87ae-c1dcc4d43196" />
+<img width="1412" height="725" alt="Captura de pantalla 2025-08-10 a las 11 36 37" src="https://github.com/user-attachments/assets/2d0e0725-044c-4e1e-8e0d-2f017e07e925" />
+
 
 
 ## 🛠️ Cómo visualizar el proyecto
