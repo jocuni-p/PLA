@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-08-2025 a las 22:33:42
+-- Tiempo de generación: 10-08-2025 a las 13:43:58
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -76,7 +76,7 @@ CREATE TABLE `alumno_clase` (
 
 DROP TABLE IF EXISTS `asignatura`;
 CREATE TABLE `asignatura` (
-  `ID_asignatura` int(11) UNSIGNED NOT NULL,
+  `ID_asignatura` int(10) UNSIGNED NOT NULL,
   `codigo` char(5) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `descripcion` text NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `clase` (
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `duracion` int(10) UNSIGNED DEFAULT NULL,
-  `ID_asignatura` int(11) UNSIGNED NOT NULL
+  `ID_asignatura` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -134,15 +134,13 @@ ALTER TABLE `alumno`
 -- Indices de la tabla `alumno_asignatura`
 --
 ALTER TABLE `alumno_asignatura`
-  ADD PRIMARY KEY (`ID_alumno`,`ID_asignatura`),
-  ADD KEY `ID_asignatura` (`ID_asignatura`);
+  ADD PRIMARY KEY (`ID_alumno`,`ID_asignatura`);
 
 --
 -- Indices de la tabla `alumno_clase`
 --
 ALTER TABLE `alumno_clase`
-  ADD PRIMARY KEY (`ID_alumno`,`ID_clase`),
-  ADD KEY `ID_clase` (`ID_clase`);
+  ADD PRIMARY KEY (`ID_alumno`,`ID_clase`);
 
 --
 -- Indices de la tabla `asignatura`
@@ -150,7 +148,6 @@ ALTER TABLE `alumno_clase`
 ALTER TABLE `asignatura`
   ADD PRIMARY KEY (`ID_asignatura`),
   ADD UNIQUE KEY `codigo` (`codigo`),
-  ADD UNIQUE KEY `curso` (`curso`),
   ADD KEY `ID_profesor` (`ID_profesor`);
 
 --
@@ -183,7 +180,7 @@ ALTER TABLE `alumno`
 -- AUTO_INCREMENT de la tabla `asignatura`
 --
 ALTER TABLE `asignatura`
-  MODIFY `ID_asignatura` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_asignatura` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `clase`
@@ -212,8 +209,8 @@ ALTER TABLE `alumno_asignatura`
 -- Filtros para la tabla `alumno_clase`
 --
 ALTER TABLE `alumno_clase`
-  ADD CONSTRAINT `alumno_clase_ibfk_1` FOREIGN KEY (`ID_clase`) REFERENCES `clase` (`ID_clase`) ON DELETE CASCADE,
-  ADD CONSTRAINT `alumno_clase_ibfk_2` FOREIGN KEY (`ID_alumno`) REFERENCES `alumno` (`ID_alumno`) ON DELETE CASCADE;
+  ADD CONSTRAINT `alumno_clase_ibfk_1` FOREIGN KEY (`ID_alumno`) REFERENCES `alumno` (`ID_alumno`) ON DELETE CASCADE,
+  ADD CONSTRAINT `alumno_clase_ibfk_2` FOREIGN KEY (`ID_clase`) REFERENCES `clase` (`ID_clase`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `asignatura`
