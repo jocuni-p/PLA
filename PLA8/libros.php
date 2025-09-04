@@ -9,6 +9,7 @@
 
 	//recuperar los datos de la peticion que quedan en el fichero 'input' del server
 	$datosJSON = file_get_contents('php://input');
+	
 	//transformamos $datos en JSON a un array asociativo
 	//si el json esta vacio, devuelvo un array vacio con ??
 	$datos = json_decode($datosJSON, true) ?? [];
