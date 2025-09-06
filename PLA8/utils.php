@@ -39,6 +39,7 @@ function validarId($id) {
 		}
 		if (count($errores)) {
 			throw new Exception(implode(';', $errores), 400);
-			//implode(): convierte un array en string con un separador de elementos
+			//implode(): convierte el array $errores en string con un separador de elementos ';'
+			// porque Exception espera como primer argumento un string.
 		}
 	}

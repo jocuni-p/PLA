@@ -1,5 +1,5 @@
 <?php
-	// Archivo Controlador
+	//------CONTROLADOR--------
 
 	require_once("modelo/librosmodel.php");
 	require_once("utils.php");
@@ -24,7 +24,6 @@
 	try {
 		//instanciamos un obj de la clase del modelo
 		$modelo = new LibrosModel();
-
 		//evaluar la peticion
 		switch ($peticion) {
 			case 'GET': //consulta de reserva
@@ -53,15 +52,14 @@
 				throw new Exception("Peticion incorrecta", 400);
 				break;
 		}
-		
-		header("HTTP/1.1 200");
+		//con header enviamos una cabezera con el status de error
+		header("HTTP/1.1 200"); // OPCIONAL
 		//envio de la respuesta en formato json
 		echo json_encode(['respuesta' => $respuesta]);
 
-
 	} catch (Exception $error) {
 		//con header enviamos una cabezera con el status de error
-		header("HTTP/1.1 {$error->getCode()}");  
+		header("HTTP/1.1 {$error->getCode()}");  //OPCIONAL
 		//echo es la respuesta del servidor a la aplicacion que usa la API
 		//en un formato json enviamos un array asociativo
 		echo json_encode(["error" => $error->getMessage()]);
