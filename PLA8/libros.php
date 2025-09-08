@@ -19,7 +19,9 @@
 
 	// recuperar el identificador de recurso a consultar, modificar o borrar
 	// este valor llega al server por la url del navegador
-	$id = $_GET['id'] ?? null;
+	//$id = (int)$_GET['id'] ?? null;
+	$id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
 
 	try {
 		//instanciamos un obj de la clase del modelo
@@ -52,13 +54,14 @@
 				throw new Exception("Peticion incorrecta", 400);
 				break;
 		}
-		//con header enviamos una cabezera con el status de error
+		//con header enviamos una cabezera con el status de error/exito al frontend
 		header("HTTP/1.1 200"); // OPCIONAL
-		//envio de la respuesta en formato json
+		//envio de la respuesta en formato json hacia el frontend
 		echo json_encode(['respuesta' => $respuesta]);
 
 	} catch (Exception $error) {
-		//con header enviamos una cabezera con el status de error
+		//con header enviamos el status de error en la cabezera de la peticion
+		header("Content-Type: text/html; charset=utf-8");
 		header("HTTP/1.1 {$error->getCode()}");  //OPCIONAL
 		//echo es la respuesta del servidor a la aplicacion que usa la API
 		//en un formato json enviamos un array asociativo

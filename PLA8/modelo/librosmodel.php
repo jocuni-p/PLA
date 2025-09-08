@@ -10,7 +10,7 @@ require_once('conexion.php');
 //Si tuviese un constructor, este deberia indicar que se 
 //ejecute el construct de su clase parent.
 
-class LibrosModel extends Database {
+class LibrosModel extends Database { //hereda el atributo protected 'conexion' de Database
 
 	public function consultaLibro($id) {
 		//confeccionar la sentencia sql
@@ -20,14 +20,14 @@ class LibrosModel extends Database {
 		// y nos devuelve un resultado
 		$resultado = $this->conexion->query($sql);
 
-		//extraer los datos de la reserva del objeto resultado de la consulta
-		//fetch_array nos entregara UNA fila
+		//extraer los datos del libro del objeto resultado de la consulta
+		//fetch_array nos entregara un array con UNA fila
 		$libro = $resultado->fetch_array(MYSQLI_ASSOC);
 
 		if(!$libro) {
 			throw new Exception("Identificador de libro no existe", 404);
 		}
-		return $libro;
+		return $libro; // array con UNA fila de nuestra BD
 	}
 
 	public function consultaLibros() {
@@ -42,6 +42,10 @@ class LibrosModel extends Database {
 		//fetch_all nos entregara TODAS las filas
 		$libros = $resultado->fetch_all(MYSQLI_ASSOC);
 
+		//OPCIONAL para saber el num de filas que hemos recuperado
+		//$numeroFilas = $resultado->num_rows;
+
+		// array con los libros seleccionados
 		return $libros;
 	}
 
@@ -64,11 +68,11 @@ class LibrosModel extends Database {
 		try {
 			//preparar la sentencia sql
 			$sentencia = $this->conexion->prepare("INSERT INTO 
-			libros (titulo, precio, autor) VALUES (?,?,?)");
+			libros (titulo, precio, autor, idcategoria) VALUES (?, ?, ?, ?)");
 
 			//bind de los valores (s - string; i - integer; d - double; b -blob)
 			//Decimos por que valores sustituir los '?'
-			$sentencia->bind_param("sds", $titulo, $precio, $autor);
+			$sentencia->bind_param("sdsi", $titulo, $precio, $autor, $idcategoria);
 
 			//trasladar la sentencia al SGBD para que la ejecute
 			$sentencia->execute();
@@ -83,43 +87,77 @@ class LibrosModel extends Database {
 			//Codigo de error de MariaDB cuando se intenta duplicar
 			// una clave unica (UK): 1062
 			if ($error->getCode() == 1062) {
-				throw new Exception("Titulo del libro ya existe", 400);
+				throw new Exception("Este titulo ya se encuentra asignado a otro libro", 400);
 			}
 			//Error indefinido del servidor
-			throw new Exception($error->getMessage(), 500);
+			$codigo = $error->getCode() ?: 500; //Proteccion por si getCode() retorna 0;
+			throw new Exception($error->getMessage(), $codigo);
 		}
 	}
 
 	public function modificacionLibro($id, $datos) {
-		extract($datos);
+		//extract($datos);
+
+		//probare asi, de momento, mas seguro
+		$titulo = $datos['titulo'] ?? null;
+		$precio = $datos['precio'] ?? null;
+		$autor  = $datos['autor'] ?? null;
+		$idcategoria = $datos['idcategoria'] ?? null;
+
 
 		try {
 			//preparar la sentencia sql
 			$sentencia = $this->conexion->prepare("UPDATE libros
-			 SET titulo=?, precio=?, autor=? WHERE idlibro = $id");
+			 SET titulo=?, precio=?, autor=?, idcategoria=? WHERE idlibro = $id");
 
 			//bind de los valores (s - string; i - integer; d - double; b -blob)
 			//Decimos por que valores sustituir los '?'
-			$sentencia->bind_param("sds", $titulo, $precio, $autor);
+			$sentencia->bind_param("sdsi", $titulo, $precio, $autor, $idcategoria);
 
 			//trasladar la sentencia al SGBD para que la ejecute
 			$sentencia->execute();
 
+			//COMPLEMENTO ADICIONAL
 			//Validar si se ha modificado alguna fila y lanzar una
-			// Exception si no se modifico ninguna (libro no existe)
+			// excepcion si no se modifico ninguna (por que el id del recurso no existe
+			//o bien porque no se han modificado datos)
 			$numfilas = $this->conexion->affected_rows;
 			if (!$numfilas) {
 				throw new Exception("Identificador de Libro no existe o no se han modificado datos", 404);
 			}
 			return "Libro modificado correctamente";
+
 		} catch (Exception $error) {
+			//Codigo de error de MariaDB cuando se intenta duplicar
+			// una clave unica (UK): 1062
+			if ($error->getCode() == 1062) {
+				throw new Exception("Titulo del libro ya existe", 400);
+			}
+			//Codigo error en caso de informar una categoria que no exista en 
+			//la tabla de categorias
+			if ($error->getCode() == 1452) {
+				throw new Exception("Categoria de libro no valida", 400);
+			}
 			//Error indefinido del servidor
-			throw new Exception($error->getMessage(), $error->getCode());
+			$codigo = $error->getCode() ?: 500; //Proteccion por si getCode() retorna 0;
+			throw new Exception($error->getMessage(), $codigo);
 		}
 	}
 
 	public function bajaLibro($id) {
+		//confeccionar la sentencia
+		$sql = "DELETE FROM libros WHERE idlibro = $id";
 
+		//trasladar la sentencia al SGBD para que la ejecute
+		$this->conexion->query($sql);
+
+		//lanzar excepcion si el id no existe
+		$numFilas = $this->conexion->affected_rows;
+		if (!$numFilas)
+			throw new Exception("Identificador de libro no existe", 404);
+
+		return "Se ha eliminado $numFilas libro";
+			
 	}
 
 }
