@@ -10,18 +10,20 @@
 	//recuperar los datos de la peticion que quedan en el fichero 'input' del server
 	$datosJSON = file_get_contents('php://input');
 	
-	//transformamos $datos en JSON a un array asociativo
-	//si el json esta vacio, devuelvo un array vacio con ??
+	//transformamos $datos en JSON a un array asociativo (con el true)
+	//si el json esta vacio, devuelvo un array vacio
 	$datos = json_decode($datosJSON, true) ?? [];
 
-	//echo $datosJSON; // DEBUG
-    //print_r($datos);
+//	echo $datosJSON; // DEBUG
+//    print_r($datos);
 
 	// recuperar el identificador de recurso a consultar, modificar o borrar
 	// este valor llega al server por la url del navegador
 	//$id = (int)$_GET['id'] ?? null;
-	$id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+	$id = isset($_GET['id']) ? $_GET['id'] : null;
 
+	//recuperar datos del filtro de consultas, si lo hay
+	$filtro = $_GET['filtro'] ?? null;
 
 	try {
 		//instanciamos un obj de la clase del modelo
@@ -30,11 +32,11 @@
 		switch ($peticion) {
 			case 'GET': //consulta de reserva
 				if ($id) { // consulta de una reserva
-					validarId($id);
+					$id = validarId($id);
 					$respuesta = $modelo->consultaLibro($id);
 				}
-				else { //consulta de todas las reservas
-					$respuesta = $modelo->consultaLibros();
+				else { //consulta de todas las reservas con un filtro
+					$respuesta = $modelo->consultaLibros($filtro);
 				}
 				break;
 			case 'POST':
@@ -42,12 +44,12 @@
 				$respuesta = $modelo->altaLibro($datos);
 				break;
 			case 'PUT': //modificacion de reserva
-				validarId($id);
+				$id = validarId($id);
 				validarDatos($datos);
 				$respuesta = $modelo->modificacionLibro($id, $datos);
 				break;
 			case 'DELETE': //baja de reserva
-				validarId($id);
+				$id = validarId($id);
 				$respuesta = $modelo->bajaLibro($id, $datos);
 				break;
 			default:
@@ -55,7 +57,7 @@
 				break;
 		}
 		//con header enviamos una cabezera con el status de error/exito al frontend
-		header("HTTP/1.1 200"); // OPCIONAL
+		header("HTTP/1.1 200 OK"); // OPCIONAL
 		//envio de la respuesta en formato json hacia el frontend
 		echo json_encode(['respuesta' => $respuesta]);
 

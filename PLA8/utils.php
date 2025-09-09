@@ -1,12 +1,14 @@
 <?php
 
 function validarId($id) {
-		if (empty($id)) {
+		if ($id == null || $id == '') {
 			throw new Exception("Se debe informar un libro", 400); //codigo de error que devolvera
 		}
-		if (!is_numeric($id) || $id <= 0) {
+		//valido que sea un entero positivo
+		if (!ctype_digit((string)$id) || (int)$id <= 0) {
 			throw new Exception("Identificador de libro no valido", 400);
 		}
+		return (int)$id;
 	}	
 	
 	
@@ -36,6 +38,13 @@ function validarId($id) {
 		}
 		if (strlen($datos['autor']) > 45) {
 			array_push($errores, "Autor demasiado largo (max 45 caracteres)");
+		}
+		if (!isset($datos['idcategoria']) || !is_numeric($datos['idcategoria'])) {
+			array_push($errores, "idcategoria obligatorio y numerico");
+		} else {
+			if ($datos['idcategoria'] <= 0) {
+				array_push($errores, "idcategoria valor invalido");
+			}
 		}
 		if (count($errores)) {
 			throw new Exception(implode(';', $errores), 400);

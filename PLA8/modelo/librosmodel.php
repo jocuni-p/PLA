@@ -30,9 +30,13 @@ class LibrosModel extends Database { //hereda el atributo protected 'conexion' d
 		return $libro; // array con UNA fila de nuestra BD
 	}
 
-	public function consultaLibros() {
+	public function consultaLibros($filtro) {
 		//confeccionar la sentencia sql
-		$sql = "SELECT * FROM libros ORDER BY titulo";
+		if ($filtro){
+			$sql = "SELECT * FROM libros WHERE titulo LIKE '%$filtro%' ORDER BY titulo";
+		} else {
+			$sql = "SELECT * FROM libros ORDER BY titulo";
+		}
 
 		//trasladar sentencia sql al SGBD (Sistema Gestor de la Base de Datos)
 		// y nos devuelve un obj
@@ -88,6 +92,9 @@ class LibrosModel extends Database { //hereda el atributo protected 'conexion' d
 			// una clave unica (UK): 1062
 			if ($error->getCode() == 1062) {
 				throw new Exception("Este titulo ya se encuentra asignado a otro libro", 400);
+			}
+			if ($error->getCode() == 1452) {
+				throw new Exception("Categoria de libro no valida", 400);
 			}
 			//Error indefinido del servidor
 			$codigo = $error->getCode() ?: 500; //Proteccion por si getCode() retorna 0;
