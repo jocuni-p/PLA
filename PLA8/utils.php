@@ -30,7 +30,7 @@ function validarId($id) {
 		} else {
 			$precio = floatval($datos['precio']);
 			if ($precio <= 0 || $precio > 9999.99) {
-			array_push($errores, "Precio fuera de rango (1 - 9999.99)");
+				array_push($errores, "Precio fuera de rango (1 - 9999.99)");
 			}
 		}
 		if (empty($datos['autor'])) {

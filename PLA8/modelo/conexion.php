@@ -19,5 +19,4 @@
 			$this->conexion = new mysqli('localhost', 'root', '', 'biblioteca');
 			$this->conexion->set_charset('utf8');
 		}
-
 	}

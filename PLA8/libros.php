@@ -14,8 +14,8 @@
 	//si el json esta vacio, devuelvo un array vacio
 	$datos = json_decode($datosJSON, true) ?? [];
 
-//	echo $datosJSON; // DEBUG
-//    print_r($datos);
+	//echo $datosJSON; // DEBUG
+    //print_r($datos); // DEBUG
 
 	// recuperar el identificador de recurso a consultar, modificar o borrar
 	// este valor llega al server por la url del navegador
@@ -70,5 +70,4 @@
 		echo json_encode(["error" => $error->getMessage()]);
 	}
 
-	
 ?>

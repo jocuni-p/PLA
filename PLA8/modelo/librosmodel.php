@@ -24,6 +24,7 @@ class LibrosModel extends Database { //hereda el atributo protected 'conexion' d
 		//fetch_array nos entregara un array con UNA fila
 		$libro = $resultado->fetch_array(MYSQLI_ASSOC);
 
+		//Validamos que exista el id consultado en la BD
 		if(!$libro) {
 			throw new Exception("Identificador de libro no existe", 404);
 		}
@@ -46,9 +47,12 @@ class LibrosModel extends Database { //hereda el atributo protected 'conexion' d
 		//fetch_all nos entregara TODAS las filas
 		$libros = $resultado->fetch_all(MYSQLI_ASSOC);
 
-		//OPCIONAL para saber el num de filas que hemos recuperado
-		//$numeroFilas = $resultado->num_rows;
+		//num de filas que hemos recuperado de la BD
+		$numeroFilas = $resultado->num_rows;
 
+		if (!$numeroFilas) {
+			throw new Exception(("No hay libros en la base de datos"), 200);
+		}
 		// array con los libros seleccionados
 		return $libros;
 	}
@@ -81,7 +85,6 @@ class LibrosModel extends Database { //hereda el atributo protected 'conexion' d
 			//trasladar la sentencia al SGBD para que la ejecute
 			$sentencia->execute();
 
-			//COMPLEMENTO OPCIONAL
 			//recuperar la clave primaria asignada al libro por el SGBD
 			$idlibro = $this->conexion->insert_id;
 
@@ -163,8 +166,6 @@ class LibrosModel extends Database { //hereda el atributo protected 'conexion' d
 		if (!$numFilas)
 			throw new Exception("Identificador de libro no existe", 404);
 
-		return "Se ha eliminado $numFilas libro";
-			
+		return "Se ha eliminado $numFilas libro";	
 	}
-
 }
