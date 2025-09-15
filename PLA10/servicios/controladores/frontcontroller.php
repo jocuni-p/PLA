@@ -1,12 +1,18 @@
 <?php
-    
+	//me aseguro de que las variables de sesion estan activadas
+	if (session_status() === PHP_SESSION_NONE) {
+		session_start();
+	}
+
+    // Importamos el namespace del controlador antes de cualquier codigo
+	use servicios\controladores\class\BancoController;
+
 	//Recuperamos las rutas de la variable de sesion
 	$ruta = $_SESSION['ruta'];
 	$servidor = $_SESSION['servidor'];
 
     //incorporar la clase del controlador y el nombre de espacio asociado a ella
     require_once("$ruta/servicios/controladores/class/bancocontroller.php");   
-	use servicios\controladores\class\BancoController;
 
 	//recuperar petición del formulario
 	//recuperar el tipo de peticion que se envie desde la vista.
@@ -16,11 +22,11 @@
 
 
     try {
-        //instanciar el controlador
-		//instanciamos un obj class BancoContrller para poder acceder a sus metodos
+        //instanciamos el controlador
+		//instanciamos un obj class BancoController para poder acceder a sus metodos
 		$banco = new BancoController();
 
-        //recuperar datos de la petición
+        //recuperar datos del formulario (incluyo idpersona en $datos)
         $idpersona = trim($_POST['idpersona'] ?? null);
 		$nif = trim($_POST['nif'] ?? null);
 		$nombre = $_POST['nombre'] ?? null;
@@ -29,47 +35,51 @@
 		$telefono = $_POST['telefono'] ?? null;
 		$email = $_POST['email'] ?? null;
 
-        //validar petición correcta
+		//Compactamos todas las variables en un array asociativo
+		//Pasare todo en este array y cada metodo usara solo las variables que necesite 
+		$datos = compact('idpersona', 'nif', 'nombre', 'apellidos', 'direccion', 'telefono', 'email');
+
+        //evaluamos la petición correcta
+		//los parametros del array $datos los validaremos en el controller
 		switch ($peticion) {
 			case 'alta':
-				//OJO: habria que validar lo que nos llega de la vista????
-				$respuesta = $banco->alta($nif, $nombre, $apellidos, $direccion, $telefono, $email);
+				$respuesta = $banco->alta($datos);
 				break;
 			case 'consulta':
-				//validacion $idpersona  ??????
-				$respuesta = $banco->consulta($idpersona);
+				$respuesta = $banco->consulta($datos);
 				break;
 			case 'modificacion':
-				//validacion datos ?????
-				$respuesta = $banco->modificacion($idpersona, $nif, $nombre, $apellidos, $direccion, $telefono, $email);
+				$respuesta = $banco->modificacion($datos);
 				break;
 			case 'baja':
-				//validar $idpersona ?????
-				$respuesta = $banco->baja($idpersona);
+				$respuesta = $banco->baja($datos);
 				break;
 		}
-        
-//    } catch (\Throwable $th) {
-	} catch (Exception $e) {
-		$respuesta = ['codigo' => $e->getCode(), 'mensajes' => $e->getMessage(), 'datospersona' => $datos];
+	} catch (Exception $e) { //recogera tanto PDOException como mis propias Exception
+		$respuesta = ['codigo' => $e->getCode(),
+					'mensajes' => $e->getMessage(),
+					'datospersona' => $datos]; //devolvemos los datos para recargar el formulario
+	}
 
-    }
 
-
-	//En esta seccion haremos la consulta de todas las personas y las 
-	//mostraremos en la tabla inferior de la pagina
+	//En esta seccion hacemos la consulta de todas las personas para
+	//mostrar en la tabla inferior de la pagina con el metodo de consulta del controlador
     try {
-        //enviar siempre el array de personas 
-                
+        //enviar siempre el array de personas    
         //llamada al método del controlador
 		$personas = $banco->consultaPersonas();
 
-//    } catch (\Throwable $th) {
     } catch (Exception $e) {
 		$respuesta = ['codigo' => $e->getCode(), 'mensajes' => $e->getMessage()];
-
     }
 
-    //carga de la vista con los datos de la respuesta
+	//Guardamos en sesion los datos para la vista
+    //de la respuesta que nos devolvio el metodo consultaPersonas()
+    $_SESSION['personasbanco'] = $personas['personas'] ?? [];
+	//respuesta obtenida de los metodos del controlador asociados a cada una de las operativas
+	$_SESSION['datosbanco'] = $respuesta ?? [];
     
-    
+	//redirigimos a la vista personas.php
+	//$servidor contiene el path inicial del servidor (recuperado arriba)
+	header("Location: $servidor/banco.php");
+	exit;
