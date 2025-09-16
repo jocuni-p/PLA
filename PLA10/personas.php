@@ -1,4 +1,9 @@
 <?php 
+	//me aseguro de que las variables de sesion estan activadas
+	if (session_status() === PHP_SESSION_NONE) {
+		session_start();
+	}
+	
 	//recuperamos el array de personas para construir dinamicamente la tabla
 	$personas = $_SESSION['personasbanco'] ?? [];
 

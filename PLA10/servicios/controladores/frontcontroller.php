@@ -8,11 +8,11 @@
 	use servicios\controladores\class\BancoController;
 
 	//Recuperamos las rutas de la variable de sesion
-	$ruta = $_SESSION['ruta'];
+	// $ruta = $_SESSION['ruta'];
 	$servidor = $_SESSION['servidor'];
 
     //incorporar la clase del controlador y el nombre de espacio asociado a ella
-    require_once("$ruta/servicios/controladores/class/bancocontroller.php");   
+    require_once($_SESSION['ruta'] . "/servicios/controladores/class/bancocontroller.php");   
 
 	//recuperar petición del formulario
 	//recuperar el tipo de peticion que se envie desde la vista.
