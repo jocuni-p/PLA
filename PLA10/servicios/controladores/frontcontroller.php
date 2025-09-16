@@ -27,7 +27,7 @@
 		$banco = new BancoController();
 
         //recuperar datos del formulario (incluyo idpersona en $datos)
-        $idpersona = trim($_POST['idpersona'] ?? null);
+        $idpersona = trim($_POST['id'] ?? null);
 		$nif = trim($_POST['nif'] ?? null);
 		$nombre = $_POST['nombre'] ?? null;
 		$apellidos = $_POST['apellidos'] ?? null;
@@ -37,7 +37,7 @@
 
 		//Compactamos todas las variables en un array asociativo
 		//Pasare todo en este array y cada metodo usara solo las variables que necesite 
-		$datos = compact('idpersona', 'nif', 'nombre', 'apellidos', 'direccion', 'telefono', 'email');
+		$datos = compact('id', 'nif', 'nombre', 'apellidos', 'direccion', 'telefono', 'email');
 
         //evaluamos la petición correcta
 		//los parametros del array $datos los validaremos en el controller
