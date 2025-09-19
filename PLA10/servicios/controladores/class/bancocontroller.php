@@ -39,6 +39,7 @@
 			$mensaje = $this->banco->alta($datos);
 
 			//confeccionamos array de respuesta
+			//'00' ens diu que tot ha anat be y podrem netejar el formulari
 			return ['codigo' => '00', 'mensajes' => $mensaje, 'datospersona' => $datos];
 		}
 
@@ -74,7 +75,7 @@
 			return ['codigo' => '00', 'personas' => $personas]; //array de todas las pers del modelo
 		}
 
-		//======Metodos private=======
+		//======Metodos auxiliares de validacion=======
 		private function validarId($idpersona): int {
 //			extract($datos);
 			if (empty($idpersona) || !is_numeric($idpersona) || $idpersona <= 0 ) {
@@ -96,7 +97,7 @@
 			$telefono = $datos['telefono'] ?? '';
 			$email = $datos['email'] ?? '';
 
-			//OJO HE DE VALIDAR TAMANYOS Y OTROS???????
+			//OJO: HE DE VALIDAR TAMANYOS Y OTROS???????
 			if (empty($nif)) $errores .= "Nif obligatorio<br>"; 
 			if (empty($nombre))	$errores .= "Nombre obligatorio<br>";
 			if (empty($apellidos)) $errores .= "Apellidos obligatorio<br>";

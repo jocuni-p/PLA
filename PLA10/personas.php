@@ -104,7 +104,7 @@
 		</div>
 	</div>
 	</div>
-<!--<form id='formconsulta' method='post' action=''> -->
+<!--<form id='formconsulta' method='post' action=''> Formulario oculto para saber en que fila de la tabla hemos hecho click-->
 	<form id='formconsulta' method='post' action='servicios/controladores/frontcontroller.php'>
 		<input type='hidden' name='peticion' value='consulta'>
 <!--	<input type='hidden' id='consulta' name='idpersona'>  -->

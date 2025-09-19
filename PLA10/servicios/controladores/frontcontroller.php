@@ -62,8 +62,8 @@
 	}
 
 
-	//En esta seccion hacemos la consulta de todas las personas para
-	//mostrar en la tabla inferior de la pagina con el metodo de consulta del controlador
+	//consulta de todas las personas para mostrar en la tabla 
+	//inferior de la pagina con el metodo de consulta del controlador
     try {
         //enviar siempre el array de personas    
         //llamada al método del controlador
