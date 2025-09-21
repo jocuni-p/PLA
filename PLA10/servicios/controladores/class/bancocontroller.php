@@ -5,8 +5,15 @@
 	//	-Instanciar obj del modelo BancoController
 	//	-Validar datos recibidos de la vista
 	//	-Atender las peticiones(alta, baja, modif, consult) del frontcontroller
-    
+
 	namespace servicios\controladores\class;
+
+
+	//===DEBUG===
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+
+    
 
 	//me aseguro de que las variables de sesion estan activadas
 	if (session_status() === PHP_SESSION_NONE) {
@@ -68,29 +75,23 @@
 			$this->validarId($datos['idpersona']);
 			$persona = $this->banco->consulta($datos['idpersona']);
 
-			return ['codigo' => '00', 'datospersona' => $persona];
+			return ['codigo' => '00', 
+					'datospersona' => $persona];
 		}
-//==================
-		//consulta de todas las personas de la tabla
-		// public function consultaPersonas() {
-		// 	$personas = $this->banco->consultaPersonas();
-
-		// 	return ['codigo' => '00', 'personas' => $personas]; //array de todas las pers del modelo
-		// }
-//==================
 
 		//=======CONSULTA PERSONAS=========
 		public function consultaPersonas($datosPaginacion) {
-			extract($datosPaginacion);
+			$mostrar = $datosPaginacion['mostrar'] ?? 5;
+			$pagina = $datosPaginacion['pagina'] ?? 1;
 
 			//El modelo nos devolvera un array con 2 datos (el array de personas
 			//consultadas en la tabla y el num de enlaces a confeccionar en la vista),
 			//con ambos retornaremos la respuesta al frontcontroller
 			$datosConsulta = $this->banco->consultaPersonas($mostrar, $pagina);
+
 			return ['codigo' => '00', 
 					'personas' => $datosConsulta[0], 
-					'enlaces' => $datosConsulta[1]
-				];
+					'enlaces' => $datosConsulta[1]];
 		}
 
 		//======METODOS PRIVATE DE VALIDACION=======//
@@ -115,7 +116,6 @@
 			$telefono = $datos['telefono'] ?? '';
 			$email = $datos['email'] ?? '';
 
-			//OJO: HE DE VALIDAR TAMANYOS Y OTROS???????
 			if (empty($nif)) $errores .= "Nif obligatorio<br>"; 
 			if (empty($nombre))	$errores .= "Nombre obligatorio<br>";
 			if (empty($apellidos)) $errores .= "Apellidos obligatorio<br>";

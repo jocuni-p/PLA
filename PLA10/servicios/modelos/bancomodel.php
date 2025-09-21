@@ -9,7 +9,13 @@
 	if (session_status() === PHP_SESSION_NONE) {
 		session_start();
 	}
+
+		//===DEBUG===
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
 	
+	$ruta = $_SESSION['ruta'];
+
 	require_once("$ruta/servicios/modelos/conexion.php");
 
 	//Namespace de las clases que usaremos aqui en el modelo
@@ -44,7 +50,7 @@
 				//ejecutamos
 				$stmt->execute();
 
-				return "Persona dada de alta";
+				return "Alta realizada correctamente";
 
 			} catch (PDOException $e) { // recoge PDOExceptions
 				//recogemos codigo y mensaje de error
@@ -67,7 +73,8 @@
 			extract($datos);
 			try {
 				//preparacion de la sentencia sql
-				$sql = "UPDATE personas SET nif = :nif, nombre = :nombre, 
+				$sql = "UPDATE personas SET nif = :nif, 
+											nombre = :nombre, 
 											apellidos = :apellidos, 
 											direccion = :direccion, 
 											telefono = :telefono, 
@@ -98,7 +105,7 @@
 					throw new Exception("Persona no existe o no se han modificado datos", 35);
 				}
 
-				return "Persona modificada";
+				return "Modificacion realizada correctamente";
 
 			} catch (PDOException $e) { // recoge exceptions de libreria PDO
 				//si lo hay, recogemos codigo y mensaje de error
@@ -119,7 +126,6 @@
 		//=====BAJA=====
 		public function baja($idpersona) {
 			try {
-				
 				//confeccionamos la sentencia y hacemos la peticion/ejecucion
 				$sql = "DELETE FROM personas WHERE idpersona = $idpersona";
 				$stmt = $this->conexion->query($sql);
@@ -129,26 +135,21 @@
 					throw new Exception("Persona no existe", 55);
 				}
 
-				return "Persona eliminada";
+				return "Baja realizada correctamente";
 
 			} catch (PDOException $e) { // recoge errores de la libreria PDO
 				//verificamos que no se haya intentado borrar una persona con cuentas asociadas
 				// por que tienen restriccion de clave foranea y no se pueden eliminar
 				if ($e->errorInfo[1] == 1451) {
-					//relanzamos la PDOException para recogerla en Exception
 					throw new Exception("Persona con cuentas asociadas. No se puede eliminar", 20);
 				}
 				throw new Exception($e->getMessage(), (int)$e->getCode());
 			}
-
 		}
 
 		//=====CONSULTA PERSONA======
 		public function consulta($idpersona) {
 			try {
-
-//				validarId($idpersona);
-				
 				//preparamos y ejecutamos sentencia (no necesitamos el prepare porque no hay datos que escapar)
 				$sql = "SELECT * FROM personas WHERE idpersona = $idpersona";
 				$stmt = $this->conexion->query($sql);
@@ -164,60 +165,40 @@
 				return $stmt->fetch();
 
 			} catch (PDOException $e) { // recoge posibles errores de la libreria PDO
-				//relanzamos la PDOException para recogerla en Exception
 				throw new Exception($e->getMessage(), (int)$e->getCode());
 			}
 		}
 
 		//======CONSULTA PERSONAS=======
-		public function consultaPersonas($datosPaginacion) {
+		public function consultaPersonas($mostrar, $pagina) {
 			try {
-				extract($datosPaginacion);
 
-				//Calculo del tramo de personas a mostrar en la tabla segun la paginacion
-				$filaInicial = ($pagina - 1) * $mostrar;
-				//sentencia del tramo de tabla que necesitamos
-				$sql = "SELECT * FROM personas ORDER BY nombre, apellidos LIMIT $filaInicial, $mostrar";
+				// Calculo del tramo de personas a mostrar en la tabla segun la paginacion
+        		$filaInicial = ($pagina - 1) * $mostrar;
+        
+				// Sentencia del tramo de tabla que necesitamos
+				$sql = "SELECT * FROM personas ORDER BY nombre, apellidos LIMIT :inicio, :mostrar";
+				$stmt = $this->conexion->prepare($sql);
+				$stmt->bindParam(':inicio', $filaInicial, PDO::PARAM_INT);
+				$stmt->bindParam(':mostrar', $mostrar, PDO::PARAM_INT);
+				$stmt->execute();
 				
-				$numfilas = "SELECT COUNT(*) as numfilas FROM personas";
-
-				$enlaces = ceil($numfilas/$mostrar);
-
+				// Obtener las personas
+				$personas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				
+				// Obtener el total de personas para la paginación
+				$sqlTotal = "SELECT COUNT(*) as total FROM personas";
+				$stmtTotal = $this->conexion->query($sqlTotal);
+				$total = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
+				
+				// Calcular número de enlaces/páginas
+				$enlaces = ceil($total / $mostrar);
+				
 				return [$personas, $enlaces];
-				
-			//================ NO LO TENGO CLARO========
-				// //ejecutamos la sentencia (aqui no requiere escapar nada, porque no requiere parametros)
-				// $sql = "SELECT * FROM personas ORDER BY nombre, apellidos";
-				// $stmt = $this->conexion->query($sql);
-				// //formato del array de respuesta (array asociativo)
-				// $stmt->setFetchMode(PDO::FETCH_ASSOC);
-				
-				// //==========ESTE TRAMO NO LO ENTIENDO===========
-				// //PDOStatement::rowCount() devuelve el num de filas a 
-				// //las que afecto la ultima sentencia (p.e. si se borro alguna)
-				// if ($stmt->rowCount() == 0) {
-				// 	throw new Exception("Persona no existe", 55);
-				// }
-				// if ($stmt->rowCount() == 0) {
-				// 	throw new Exception("Sin datos", 11);
-				// }
-				// return $stmt->fetchAll();
-			//===================
 
-			} catch (PDOException $e) { // recoge posibles errores de la libreria PDO
-				// lo relanza con el tipo Exception
+			} catch (PDOException $e) { //posibles errores de la libreria PDO y relanzado como Exception
 				throw new Exception($e->getMessage(), (int)$e->getCode());
 			}
-
 		}
-
-		// //=====METODOS VALIDACION PRIVADOS=====
-
-		// private function validarId($idpersona) {
-		// 	if (empty($idpersona) || !is_numeric($idpersona) || $idpersona == 0) {
-		// 		throw new Exception("Se debe seleccionar una persona", 14);
-		// 	}
-		// }
-
 	}
 ?>

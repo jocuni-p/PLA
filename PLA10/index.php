@@ -21,19 +21,6 @@
 		'pagina' => 1		//pagina inicial por defecto
 	];
 
-	// Datos que siempre se inicializan al cargar la aplicacion.
-	// $_SESSION['errores'] = [];
-	// $_SESSION['nif'] = null;
-	// $_SESSION['nombre'] = null;
-	// $_SESSION['apellidos'] = null;
-	// $_SESSION['direccion'] = null;
-	// $_SESSION['telefono'] = null;
-	// $_SESSION['email'] = null;
-	
-
-	//header("Location: servicios/controladores/frontcontroller.php");
-
-
 	//redireccion hacia el forntcontroller
 	header("Location: $servidor/servicios/controladores/frontcontroller.php");
 	exit;

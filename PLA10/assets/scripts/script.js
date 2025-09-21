@@ -16,8 +16,7 @@ function consultaPersona(td) {
 	let idpersona = tr.getAttribute('data-id')
 
 	//trasladar el id al formulario oculto
-	document.querySelector('#consulta').value = idpersona
-
+	document.querySelector('#id').value = idpersona
 	//submit del formulario oculto
 	document.querySelector('#formconsulta').submit()
 }
