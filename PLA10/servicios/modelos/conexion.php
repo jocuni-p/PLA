@@ -1,7 +1,8 @@
 <?php
 
-//FICHERO DE CONEXION
-//Usaremos la libreria PDO para comunicar con el SGBD
+	//======FICHERO DE CONEXION A BD=======
+
+	//Usaremos la libreria PDO para comunicar con el SGBD
 	
 	namespace servicios\modelos;
 

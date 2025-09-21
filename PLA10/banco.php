@@ -1,18 +1,25 @@
 <?php 
+
+	//=======VISTA=======
+
 	//me aseguro de que las variables de sesion estan activadas
 	if (session_status() === PHP_SESSION_NONE) {
 		session_start();
 	}
 	
+	//recuperamos al array con los datos de la persona a mostrar en el formulario
+	if (isset($_SESSION['datosbanco'])) {
+		extract($_SESSION['datosbanco']);
+	}
+	
+	//recuperamos info de la paginacion de la tabla
+	if (isset($_SESSION['paginacion'])) {
+		extract($_SESSION['paginacion']);
+	}
+	
 	//recuperamos el array de personas para construir dinamicamente la tabla
 	$personas = $_SESSION['personasbanco'] ?? [];
-
-	//recuperamos al array con los datos de la persona a mostrar en el formulario
-	if (isset($_SESSION['datosbanco']))
-		//extraemos las variables del array
-		extract($_SESSION['datosbanco']);
-
-
+	
 
 ?>
 <html>
@@ -78,14 +85,19 @@
 			<hr>
 			<p class='mensajes'><?=$mensajes ?? null;?></p> <!-- para visualizar los msgs del controlador -->
  		</form><br><br>
-		<form method='get' action='' class="d-flex justify-content-center">
+<!--		<form method='get' action='' class="d-flex justify-content-center">     -->
+			<form method='get' action='servicios/controladores/frontcontroller.php' class="d-flex justify-content-center">
 			<div class="row col-4 mb-3">
 			    <label class="form-label">Personas a mostrar</label>
 			    <select class="form-select" name='mostrar' onchange="this.form.submit()">
-			      	<option >5</option>
+<!--			    <option >5</option>
 			      	<option >10</option>
 			      	<option >15</option>
-			      	<option >20</option>
+			      	<option >20</option>   -->
+					<option <?php if ($mostrar == 5) {echo 'selected';}?>>5</option>
+					<option <?php if ($mostrar == 10) {echo 'selected';}?>>10</option>
+					<option <?php if ($mostrar == 15) {echo 'selected';}?>>15</option>
+					<option <?php if ($mostrar == 20) {echo 'selected';}?>>20</option>
 			    </select>
 			</div>
 		</form>
@@ -99,7 +111,18 @@
 		</table>
 		<div class="enlaces d-flex justify-content-center">
 			<p>
-				<a class='resaltar' href=''>número de página</a>
+<!--				<a class='resaltar' href=''>número de página</a>   -->
+			<?php
+				for ($e = 1; $e <= $enlaces; $e++) {
+					if ($e == $pagina) {
+						echo "< a class='resaltar' href='servicios/controladores/
+							frontcontroller.php?pagina=$e&mostrar=$mostrar'>$e</a>";
+					} else {
+						echo "<a href='servicios/controladores/frontcontroller.php?pagina=
+							$e&mostrar=$mostrar'>$e</a>";
+					}
+				}
+			?>
 			</p>
 		</div>
 	</div>

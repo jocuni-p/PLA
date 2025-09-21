@@ -1,4 +1,7 @@
 <?php
+
+	//===PRE-CONTROLADOR===
+
 	//me aseguro de que las variables de sesion estan activadas
 	if (session_status() === PHP_SESSION_NONE) {
 		session_start();
@@ -7,22 +10,22 @@
     // Importamos el namespace del controlador antes de cualquier codigo
 	use servicios\controladores\class\BancoController;
 
-	//Recuperamos las rutas de la variable de sesion
-	// $ruta = $_SESSION['ruta'];
-	$servidor = $_SESSION['servidor'];
-
     //incorporar la clase del controlador y el nombre de espacio asociado a ella
     require_once($_SESSION['ruta'] . "/servicios/controladores/class/bancocontroller.php");   
+
+	//Recuperamos de la var de sesion: ruta de archivos y servidor
+	$ruta = $_SESSION['ruta'];
+	$servidor = $_SESSION['servidor'];
 
 	//recuperar petición del formulario
 	//recuperar el tipo de peticion que se envie desde la vista.
 	//Al entrar a la aplicacion desde index.php aun no recibiremos 
-	//ninguna peticion asociada al formulario, por eso seteamos a null
+	//ninguna peticion asociada al formulario, por eso la seteamos a null
 	$peticion = $_POST['peticion'] ?? null;
 
 
     try {
-        //instanciamos el controlador
+        //instanciamos el obj controlador
 		//instanciamos un obj class BancoController para poder acceder a sus metodos
 		$banco = new BancoController();
 
@@ -39,8 +42,7 @@
 		//Pasare todo en este array y cada metodo usara solo las variables que necesite 
 		$datos = compact('id', 'nif', 'nombre', 'apellidos', 'direccion', 'telefono', 'email');
 
-        //evaluamos la petición correcta
-		//los parametros del array $datos los validaremos en el controller
+        //evaluamos la petición correcta, si no hay peticion (null), no deberia evaluarse nada
 		switch ($peticion) {
 			case 'alta':
 				$respuesta = $banco->alta($datos);
@@ -61,25 +63,46 @@
 					'datospersona' => $datos]; //devolvemos los datos para recargar el formulario
 	}
 
+	//Creo que aqui deberia guardar $respuesta en las variables de sesion $_SESSION
+	// $_SESSION['datosbanco'] = $respuesta ?? [];
+	// $_SESSION['personasbanco'] = $personas['personas'] ?? [];
 
 	//consulta de todas las personas para mostrar en la tabla 
-	//inferior de la pagina con el metodo de consulta del controlador
     try {
+		//recuperamos los datos para la operativa de paginacion: pagina y num personas
+		$datosPaginacion['mostrar'] = $_GET['mostrar'] ?? 5; // si no existe sera este por default
+		$datosPaginacion['pagina'] = $_GET['pagina'] ?? 1;
+
+		//==================================sin paginacion
         //enviar siempre el array de personas    
         //llamada al método del controlador
-		$personas = $banco->consultaPersonas();
+		//$personas = $banco->consultaPersonas();
+		//===================================
+
+		//enviamos el array con los datos de paginacion y recogemos el array de respuesta
+		$datosConsulta = $banco->consultaPersonas($datosPaginacion);
+
 
     } catch (Exception $e) {
 		$respuesta = ['codigo' => $e->getCode(), 'mensajes' => $e->getMessage()];
     }
 
-	//Guardamos en sesion los datos para la vista
+	//====================================
+	//Guardamos en las variables de sesion los datos para la vista
     //de la respuesta que nos devolvio el metodo consultaPersonas()
-    $_SESSION['personasbanco'] = $personas['personas'] ?? [];
+    //$_SESSION['personasbanco'] = $personas['personas'] ?? [];
 	//respuesta obtenida de los metodos del controlador asociados a cada una de las operativas
-	$_SESSION['datosbanco'] = $respuesta ?? [];
+	//$_SESSION['datosbanco'] = $respuesta ?? [];
+	//=====================================
+
+	//Guardamos en vars de sesion los datos para la vista
+	$_SESSION['personasbanco'] = $datosConsulta['personas'] ?? [];
+	$_SESSION['paginacion'] = [
+		'enlaces' => $datosConsulta['enlaces'],
+		'mostrar' => $datosPaginacion['mostrar'],
+		'pagina' => $datosPaginacion['pagina']
+	];
     
-	//redirigimos a la vista personas.php
-	//$servidor contiene el path inicial del servidor (recuperado arriba)
+	//redirigimos a la vista del banco.php
 	header("Location: $servidor/banco.php");
 	exit;

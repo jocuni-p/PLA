@@ -1,4 +1,6 @@
 <?php 
+
+	//=======CONTROLADOR=======
 	//BancoController se encarga de:
 	//	-Instanciar obj del modelo BancoController
 	//	-Validar datos recibidos de la vista
@@ -33,9 +35,9 @@
 			}
 		}
 
-		// Metodos publicos
-		public function alta($datos): array { //Opcional: especifico el tipo de retorno de function para mejor documentacion 
-			$this->validarDatos($datos); // Con 'this' llamo a un metodo de la propia clase
+		// =====ALTA====
+		public function alta($datos): array {
+			$this->validarDatos($datos);
 			$mensaje = $this->banco->alta($datos);
 
 			//confeccionamos array de respuesta
@@ -43,6 +45,7 @@
 			return ['codigo' => '00', 'mensajes' => $mensaje, 'datospersona' => $datos];
 		}
 
+		// =====BAJA=====
 		public function baja($datos): array {
 			$this->validarId($datos['idpersona']);
 			$mensaje = $this->banco->baja($datos['idpersona']);
@@ -51,8 +54,8 @@
 			return ['codigo' => '00', 'mensajes' => $mensaje];
 		}
 		
-
-		public function modificacion($datos):array {
+		//=======MODIFICACION=======
+		public function modificacion($datos): array {
 			$this->validarId($datos['idpersona']);
 			$this->validarDatos($datos);
 			$mensaje = $this->banco->modificacion($datos);
@@ -60,24 +63,39 @@
 			return ['codigo' => '00', 'mensajes' => $mensaje, 'datospersona' => $datos];
 		}
 		
-		//consulta 1 persona
+		//=======CONSULTA PERSONA=======
 		public function consulta($datos): array { 
 			$this->validarId($datos['idpersona']);
 			$persona = $this->banco->consulta($datos['idpersona']);
 
 			return ['codigo' => '00', 'datospersona' => $persona];
 		}
-
+//==================
 		//consulta de todas las personas de la tabla
-		public function consultaPersonas() {
-			$personas = $this->banco->consultaPersonas();
+		// public function consultaPersonas() {
+		// 	$personas = $this->banco->consultaPersonas();
 
-			return ['codigo' => '00', 'personas' => $personas]; //array de todas las pers del modelo
+		// 	return ['codigo' => '00', 'personas' => $personas]; //array de todas las pers del modelo
+		// }
+//==================
+
+		//=======CONSULTA PERSONAS=========
+		public function consultaPersonas($datosPaginacion) {
+			extract($datosPaginacion);
+
+			//El modelo nos devolvera un array con 2 datos (el array de personas
+			//consultadas en la tabla y el num de enlaces a confeccionar en la vista),
+			//con ambos retornaremos la respuesta al frontcontroller
+			$datosConsulta = $this->banco->consultaPersonas($mostrar, $pagina);
+			return ['codigo' => '00', 
+					'personas' => $datosConsulta[0], 
+					'enlaces' => $datosConsulta[1]
+				];
 		}
 
-		//======Metodos auxiliares de validacion=======
+		//======METODOS PRIVATE DE VALIDACION=======//
+
 		private function validarId($idpersona): int {
-//			extract($datos);
 			if (empty($idpersona) || !is_numeric($idpersona) || $idpersona <= 0 ) {
 				throw new Exception("Se debe seleccionar una persona", 14); //Que codigo es 14??
 			}

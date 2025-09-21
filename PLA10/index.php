@@ -3,14 +3,23 @@
 
 	session_start(); // Activa las variables de sesion
 
-	//Variables de sesion para intercambiar datos entre vista y controlador
-	$_SESSION['ruta'] = __DIR__;
+	//Creamos la vars de sesion para intercambiar datos entre vista y controlador
+	$_SESSION['ruta'] = __DIR__; //pwd
 	$ruta = $_SESSION['ruta']; //ruta a la estructura de carpetas del servidor
-	//pwd => /Applications/XAMPP/xamppfiles/htdocs/PLA/PLA10
-	//require_once("$ruta/servicios/controladores/frontcontroller.php");
+	
+	$_SESSION['servidor'] = "http://localhost/PLA/PLA10"; //ruta al servidor
+	$servidor = $_SESSION['servidor'];
 
-	$_SESSION['personasbanco'] = []; //array de todas las personas a mostrar en la tabla
-	$_SESSION['datosbanco'] = []; // guardara los datos del formulario
+	//Inicializamos vars de sesion para: datos formulario y la tabla de personas
+	$_SESSION['datosbanco'] = []; // array para datos del formulario
+	$_SESSION['personasbanco'] = []; //array para datos tabla inferior
+
+	//Seteamos los datos para la paginacion
+	$_SESSION['paginacion'] = [
+		'enlaces' => 0,   	//num enlaces por defecto
+		'mostrar' => 5,		//num personas a mostrar por defecto
+		'pagina' => 1		//pagina inicial por defecto
+	];
 
 	// Datos que siempre se inicializan al cargar la aplicacion.
 	// $_SESSION['errores'] = [];
@@ -22,9 +31,10 @@
 	// $_SESSION['email'] = null;
 	
 
-	$_SESSION['servidor'] = "http://localhost/PLA/PLA10"; //ruta al servidor
-	$servidor = $_SESSION['servidor'];
-	//redireccionamos hacia el forntcontroller
+	//header("Location: servicios/controladores/frontcontroller.php");
+
+
+	//redireccion hacia el forntcontroller
 	header("Location: $servidor/servicios/controladores/frontcontroller.php");
 	exit;
 ?>
