@@ -6,14 +6,11 @@
 	//	-Validar datos recibidos de la vista
 	//	-Atender las peticiones(alta, baja, modif, consult) del frontcontroller
 
-	namespace servicios\controladores\class;
-
+	namespace servicios\controladores\clases;
 
 	//===DEBUG===
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
-
-    
 
 	//me aseguro de que las variables de sesion estan activadas
 	if (session_status() === PHP_SESSION_NONE) {
@@ -22,13 +19,12 @@
 
 	//Incorporamos el fichero del modelo
 	require_once($_SESSION['ruta'] . "/servicios/modelos/bancomodel.php");
+	
 	//Incorporamos los namespaces de las clases que usaremos dentro del controlador
 	use servicios\modelos\BancoModel;
 	use \Exception;
 
-	//HE DE RECUPERAR AQUI EL ARRAY DE LA VARIABLE $_POST ?????
-
-    //definir la clase controlador
+    //CLASSE CONTROLADOR
 	class BancoController {
 
 		private BancoModel $banco;
@@ -38,7 +34,7 @@
 			try {
 				$this->banco = new BancoModel(); // Instancia obj class BancoModel
 			} catch (Exception $e) {
-				throw $e; // relanzamos la exception para capturar mas adelante en controlador
+				throw $e; // relanzamos la exception para capturar mas adelante
 			}
 		}
 
@@ -48,7 +44,7 @@
 			$mensaje = $this->banco->alta($datos);
 
 			//confeccionamos array de respuesta
-			//'00' ens diu que tot ha anat be y podrem netejar el formulari
+			//'00' ens diu que tot ha anat be i podrem netejar el formulari
 			return ['codigo' => '00', 'mensajes' => $mensaje, 'datospersona' => $datos];
 		}
 
@@ -98,12 +94,10 @@
 
 		private function validarId($idpersona): int {
 			if (empty($idpersona) || !is_numeric($idpersona) || $idpersona <= 0 ) {
-				throw new Exception("Se debe seleccionar una persona", 14); //Que codigo es 14??
+				throw new Exception("Se debe seleccionar una persona", 14);
 			}
 			return (int)$idpersona;
 		}
-
-
 
 		private function validarDatos($datos) {
 			$errores = '';
@@ -129,5 +123,5 @@
 				throw new Exception($errores);
 			}
 		}
-
     }
+?>

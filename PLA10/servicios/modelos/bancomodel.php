@@ -50,7 +50,7 @@
 				//ejecutamos
 				$stmt->execute();
 
-				return "Alta realizada correctamente";
+				return "Alta efectuada";
 
 			} catch (PDOException $e) { // recoge PDOExceptions
 				//recogemos codigo y mensaje de error
@@ -64,7 +64,7 @@
 					}
 				}
 				//relanzamos la PDOException para recogerla en Exception
-				throw new Exception("No pueden existir dos personas con mismo $clave", $codigo);
+				throw new Exception("No pueden existir dos personas con el mismo $clave", $codigo);
 			}
 		}
 
@@ -96,6 +96,7 @@
 				$stmt->bindParam(':direccion', $direccion);
 				$stmt->bindParam(':telefono', $telefono);
 				$stmt->bindParam(':email', $email);
+				$stmt->bindParam(':idpersona', $idpersona, PDO::PARAM_INT);
 				
 				//ejecutamos hacia el SGBD
 				$stmt->execute();
@@ -105,7 +106,7 @@
 					throw new Exception("Persona no existe o no se han modificado datos", 35);
 				}
 
-				return "Modificacion realizada correctamente";
+				return "Modificacion efectuada";
 
 			} catch (PDOException $e) { // recoge exceptions de libreria PDO
 				//si lo hay, recogemos codigo y mensaje de error
@@ -135,7 +136,7 @@
 					throw new Exception("Persona no existe", 55);
 				}
 
-				return "Baja realizada correctamente";
+				return "Baja efectuada";
 
 			} catch (PDOException $e) { // recoge errores de la libreria PDO
 				//verificamos que no se haya intentado borrar una persona con cuentas asociadas

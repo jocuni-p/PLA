@@ -2,7 +2,7 @@
 
 	//=======VISTA=======
 
-		//===DEBUG===
+	//===DEBUG===
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
@@ -38,7 +38,7 @@
 <body>
 	<div class='container'>
 		<form id='formulario' method='post' action='servicios/controladores/frontcontroller.php'>
-			<input type='hidden' id='idpersona' name='idpersona' value=''>
+			<input type='hidden' id='idpersona' name='idpersona' value='<?=$datospersona['idpersona'] ?? '';?>'>
 			<div class="row mb-3">
 			    <label for="nif" class="col-sm-2 col-form-label">NIF</label>
 			    <div class="col-sm-10">
@@ -79,7 +79,8 @@
 			<button type="submit" class="btn btn-success" id='alta' name='peticion'  value='alta'>Alta</button>
 			<button type="submit" class="btn btn-warning" id='modificacion' name='peticion' value='modificacion'>Modificación</button>
 			<button type="submit" class="btn btn-danger" id='baja' name='peticion'  value='baja'>Baja</button>
-			<button type="reset" class="btn btn-success">Limpiar</button>
+<!--			<button type="reset" class="btn btn-success">Limpiar</button>   -->
+			<a href="index.php" class="btn btn-success">Limpiar</a>
 			<label class="col-sm-2 col-form-label"></label>
 			<hr>
 			<p class='mensajes'><?=$mensajes ?? null;?></p> <!-- para visualizar los msgs del controlador -->
@@ -99,7 +100,7 @@
 			<tr class='table-dark'><th>NIF</th><th>Nombre</th><th>Apellidos</th></tr>
 			<?php if (!empty($personas)): ?>
 				<?php foreach ($personas as $persona): ?>
-					<tr data-id='<?= $persona['idpersona'] ?? '' ?>' onclick='consultaPersona(this)'>
+					<tr data-id='<?= $persona['idpersona'] ?? '' ?>' >
 						<td><?= htmlspecialchars($persona['nif'] ?? '') ?></td>
 						<td><?= htmlspecialchars($persona['nombre'] ?? '') ?></td>
 						<td><?= htmlspecialchars($persona['apellidos'] ?? '') ?></td>
@@ -114,11 +115,9 @@
 			<?php
 				for ($e = 1; $e <= $enlaces; $e++) {
 					if ($e == $pagina) {
-						echo "< a class='resaltar' href='servicios/controladores/
-							frontcontroller.php?pagina=$e&mostrar=$mostrar'>$e</a>";
+						echo "<a class='resaltar' href='servicios/controladores/frontcontroller.php?pagina=$e&mostrar=$mostrar'>$e</a> ";
 					} else {
-						echo "<a href='servicios/controladores/frontcontroller.php?pagina=
-							$e&mostrar=$mostrar'>$e</a>";
+						echo "<a href='servicios/controladores/frontcontroller.php?pagina=$e&mostrar=$mostrar'>$e</a> ";
 					}
 				}
 			?>
@@ -127,9 +126,9 @@
 	</div>
 	</div>
 <!-- Formulario oculto para saber en que fila de la tabla hemos hecho click-->
-	<form id='formconsulta' method='post' action='servicios/controladores/frontcontroller.php'>
+	<form id='formconsulta' method='post' action="servicios/controladores/frontcontroller.php">
 		<input type='hidden' name='peticion' value='consulta'>
-		<input type='hidden' id='id' name='idpersona'>
+		<input type='hidden' id='consulta' name='idpersona'>
 	</form>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script type="text/javascript" src='assets/scripts/script.js'></script>

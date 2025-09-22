@@ -11,18 +11,18 @@
 		session_start();
 	}
 
-    // Importamos el namespace del controlador antes de cualquier codigo
-	use servicios\controladores\class\BancoController;
+    // Importamos el namespace del controlador
+	use servicios\controladores\clases\BancoController;
 
     //incorporar la clase del controlador y el nombre de espacio asociado a ella
-    require_once($_SESSION['ruta'] . "/servicios/controladores/class/bancocontroller.php");   
+    require_once($_SESSION['ruta'] . "/servicios/controladores/clases/bancocontroller.php");   
 
 	//Recuperamos de la var de sesion: ruta de archivos y servidor
 	$ruta = $_SESSION['ruta'];
 	$servidor = $_SESSION['servidor'];
 
 	//recuperar petición del formulario
-	//recuperar el tipo de peticion que se envie desde la vista.
+	//recuperar el tipo de peticion que se envia desde la vista.
 	//Al entrar a la aplicacion desde index.php aun no recibiremos 
 	//ninguna peticion asociada al formulario, por eso la seteamos a null
 	$peticion = $_POST['peticion'] ?? null;
@@ -80,7 +80,6 @@
 
 		//enviamos el array con los datos de paginacion y recogemos el array de respuesta
 		$datosConsulta = $banco->consultaPersonas($datosPaginacion);
-
 
     } catch (Exception $e) {
 		$respuesta = ['codigo' => $e->getCode(), 'mensajes' => $e->getMessage()];

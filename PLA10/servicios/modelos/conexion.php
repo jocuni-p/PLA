@@ -28,8 +28,5 @@
 				throw new Exception($e->getMessage(), $e->getCode());
 			}
 		}
-
-		//OJO: Supongo que habra que implementar el metodo setAttribute ??????
 	}
-	
 ?>
