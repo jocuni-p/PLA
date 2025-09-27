@@ -25,8 +25,8 @@
 				<small class="text-muted"><b>Año: </b>{{$pelicula->anio}}</small>
 				</p>
 				<!-- Pendiente de hacerlo dinamico, para que vaya a la imagen correcta -->
-				<a href="{{route('ruta.pelicula', [3])}}" class="btn btn-outline-primary btn-block">Ver más...</a>
-				<a href="{{route('ruta.pelicula-mto', [3])}}" class="btn btn-outline-primary btn-block">Editar</a>
+				<a href="{{route('consulta.pelicula', [$pelicula->id])}}" class="btn btn-outline-primary btn-block">Ver más...</a>
+				<a href="{{route('mantenimiento.pelicula', [$pelicula->id])}}" class="btn btn-outline-primary btn-block">Editar</a>
 			</div>
 		</div>
 	@endforeach

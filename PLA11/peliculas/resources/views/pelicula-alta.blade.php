@@ -43,7 +43,7 @@
         </form>
     </div>
     <div class='column col-4'>
-        <img src='{{ asset("img/abyss.jpg") }}' alt="previsualizar" id='previsualizar'>
+        <img src='{{ asset("img/sinportada.jpg") }}' alt="previsualizar" id='previsualizar'>
     </div>
 </div>
 @endsection

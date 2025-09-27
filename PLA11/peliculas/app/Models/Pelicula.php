@@ -18,9 +18,10 @@ class Pelicula extends Model
 		'sinopsis',
 		'img'
 	];
-	//No actualizar las columnas de timestamp
-	//que si no hubieramos puesto nuestra base 
-	//de datos el anyadiria
+	
+	//No actualiza las columnas de timestamp,
+	//si no hubieramos puesto nuestra base 
+	//de datos Laravel anyadiria 
 	public $timestamps = false;
 
 }

@@ -8,11 +8,11 @@ use App\Models\Pelicula;
 class VistasController extends Controller
 {
     //carga de la vista 'inicio'
-	public function cargarInicio() {
+	public function index() {
 		return view('inicio');
 	}
 
-	public function cargarPeliculas() {
+	public function consultaPeliculas() {
 		//consulta en la base de datos utilizando el modelo
 		//all() en Laravel equivale a la instruccion SQL: SELECT * FROM peliculas 
 		//La forma de enviar datos a una vista 
@@ -26,15 +26,15 @@ class VistasController extends Controller
 		return view('peliculas')->with($datos);
 	}
 
-	public function cargarPelicula($id) {
+	public function consultaPelicula($id) {
 		return view('pelicula');
 	}
 
-	public function cargarPeliculaAlta() {
+	public function altaPelicula() {
 		return view('pelicula-alta');
 	}
 
-	public function cargarPeliculaMto($id) {
+	public function mantenimientoPelicula($id) {
 		return view('pelicula-mto');
 	}
 }

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\VistasController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VistasController;
+use App\Http\Controllers\PeliculasController;
 /*
 Route::get('/', function () {
     // vista inicio
@@ -26,12 +27,34 @@ Route::get('/pelicula-mto', function () {
 });
 */
 
-//Asociamos las rutas a un controlador y a un metodo.
-//con name() damos un nombre/alias a la ruta para que si hemos de modificar 
-//alguna ruta en toda la aplicacion se modificara solo aqui una vez. 
-//No es obligatorio usarlo si no queremos.
-Route::get('/', [VistasController::class, 'cargarInicio'])->name('ruta.vista.inicio');
-Route::get('/peliculas', [VistasController::class, 'cargarPeliculas'])->name('ruta.peliculas');
-Route::get('/pelicula/{id}', [VistasController::class, 'cargarPelicula'])->name('ruta.pelicula');
-Route::get('/pelicula-alta', [VistasController::class, 'cargarPeliculaAlta'])->name('ruta.pelicula-alta');
-Route::get('/pelicula-mto/{id}', [VistasController::class, 'cargarPeliculaMto'])->name('ruta.pelicula-mto');
+
+//===RUTAS GET DE CARGA DE VISTAS====//
+//Las rutas GET cargan plantillas Blade (las vistas).
+
+Route::get('/', [VistasController::class, 'index'])->name('inicio');
+
+Route::get('/peliculas', [VistasController::class, 'consultaPeliculas'])
+	->name('consulta.peliculas');
+
+Route::get('/pelicula/{id}', [VistasController::class, 'consultaPelicula'])
+	->name('consulta.pelicula');
+
+Route::get('/pelicula-alta', [VistasController::class, 'altaPelicula'])
+	->name('alta.pelicula');
+
+Route::get('/pelicula-mto/{id}', [VistasController::class, 'mantenimientoPelicula'])
+	->name('mantenimiento.pelicula');
+
+
+
+//===RUTAS CRUD (operaciones POST PUT DELETE con BD)====//
+//Las rutas POST/PUT/DELETE procesan los datos del formulario (alta, modificación, baja).
+
+Route::post('/pelicula-alta', [PeliculasController::class, 'alta'])
+	->name('crud.pelicula.alta');
+
+Route::put('/pelicula-mto/{id}', [PeliculasController::class, 'modificacion'])
+	->name('crud.pelicula.modificacion');
+
+Route::delete('/pelicula-mto/{id}', [PeliculasController::class, 'baja'])
+	->name('crud.pelicula.baja');
