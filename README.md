@@ -29,9 +29,9 @@ El repositorio está organizado según los módulos del curso:
   - Conexión con PHP (MySQLi, PDO).
   - Implementación del patrón MVC.
 
-### 📂 Módulo 3: Framework CodeIgniter (PLA11 - PLA15)
+### 📂 Módulo 3: Framework Laravel (PLA11 - PLA15)
 - **Temas cubiertos**:
-  - Estructura y configuración de CodeIgniter.
+  - Estructura y configuración de Laravel.
   - Creación de vistas, controladores y modelos.
   - Llamadas síncronas y asíncronas (AJAX).
 
@@ -44,8 +44,8 @@ El repositorio está organizado según los módulos del curso:
 ## 🛠 Tecnologías Utilizadas
 - **Lenguajes**: PHP, SQL, HTML/CSS, JavaScript.
 - **Bases de datos**: MariaDB.
-- **Frameworks/Librerías**: CodeIgniter, Laravel, DOMPDF.
-- **Herramientas**: phpMyAdmin, MySQL Workbench, Git.
+- **Frameworks/Librerías**: Laravel, DOMPDF.
+- **Herramientas**: phpMyAdmin, MySQL XAMPP, Composer, Git.
 
 ---
 
