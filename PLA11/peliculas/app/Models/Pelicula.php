@@ -10,6 +10,7 @@ class Pelicula extends Model
     /** @use HasFactory<\Database\Factories\PeliculaFactory> */
     use HasFactory;
 
+	//defino mi tabla
 	protected $table = 'peliculas';
 	protected $fillable = [
 		'titulo',
@@ -18,10 +19,19 @@ class Pelicula extends Model
 		'sinopsis',
 		'img'
 	];
-	
-	//No actualiza las columnas de timestamp,
-	//si no hubieramos puesto nuestra base 
-	//de datos Laravel anyadiria 
+
+	//metodo para devolver las peliculas ordenadas por titulo
+	public static function consulta() {
+		return self::orderBy('titulo')->get();
+	}
+
+	//Laravel, si no especificamos lo contrario, por defecto
+	// considera que la clave primaria PK se llama 'id'
+
+	//Si no hubieramos puesto nuestra base 
+	//de datos, Laravel anyadiria las columnas 
+	//de timestamp created_at y updated_at
+	//No actualices las columnas de timestamp.
 	public $timestamps = false;
 
 }

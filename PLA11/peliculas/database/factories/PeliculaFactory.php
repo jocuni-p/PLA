@@ -17,7 +17,7 @@ class PeliculaFactory extends Factory
     public function definition(): array
     {
         return [
-			'titulo' => fake()->unique()->sentence(), 
+			'titulo' => fake()->unique()->text(20), 
 			'direccion' => fake()->name(), 
 			'anio' => fake()->year(), 
 			'sinopsis' => fake()->text(),

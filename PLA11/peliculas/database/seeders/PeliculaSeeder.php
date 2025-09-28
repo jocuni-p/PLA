@@ -10,43 +10,44 @@ use App\Models\Pelicula;
 
 class PeliculaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
-		//Opcion A: Utilizamos el modelo generico DB
-/*        DB::table('peliculas')->insert([
+		Pelicula::truncate(); //borra todos los registros y reinicia a 0 el id autoincremental
+
+		//Opcion A: creo algunos registros reales
+		DB::table('peliculas')->insert([
             [
-                'titulo'   => 'El Padrino',
+                'titulo'   => 'Al Padrino',
                 'direccion'=> 'Francis Ford Coppola',
                 'anio'     => 1972,
                 'sinopsis' => 'La historia de la familia Corleone.',
-                'img'      => 'elpadrino.jpg'
+                'img'      => 'sinportada.jpg'
             ],
             [
-                'titulo'   => 'Pulp Fiction',
+                'titulo'   => 'Bulp Fiction',
                 'direccion'=> 'Quentin Tarantino',
                 'anio'     => 1994,
                 'sinopsis' => 'Historias entrelazadas en Los Ángeles criminal.',
-                'img'      => 'pulpfiction.jpg'
+                'img'      => 'sinportada.jpg'
             ],
             [
                 'titulo'   => 'Inception',
                 'direccion'=> 'Christopher Nolan',
                 'anio'     => 2010,
                 'sinopsis' => 'Un ladrón roba secretos infiltrándose en los sueños.',
-                'img'      => 'inception.jpg'
+                'img'      => 'sinportada.jpg'
             ],
             [
                 'titulo'   => 'Cinema Paradiso',
                 'direccion'=> 'Giuseppe Tornatore',
                 'anio'     => 1988,
                 'sinopsis' => 'Un cine de pueblo y la amistad entre un niño y un proyeccionista.',
-                'img'      => 'cinemaparadiso.jpg'
+                'img'      => 'sinportada.jpg'
             ]
-        ]); */
-		//Opcion B: utilizamos la factory
+        ]); 
+
+		//Opcion B: utilizo factory (crea registros inventados sin significado real)
 		Pelicula::factory(10)->create();
     }
 }

@@ -9,33 +9,41 @@ class VistasController extends Controller
 {
     //carga de la vista 'inicio'
 	public function index() {
-		return view('inicio');
+		$datos['pagina'] = 'Peliculas';
+		return view('inicio')->with($datos);
 	}
 
-	public function consultaPeliculas() {
-		//consulta en la base de datos utilizando el modelo
-		//all() en Laravel equivale a la instruccion SQL: SELECT * FROM peliculas 
-		//La forma de enviar datos a una vista 
-		//tiene que ser mediante un array asociativo
-		$datos['peliculas'] = Pelicula::all(); 
+	//carga formulario de alta
+	public function altaPelicula() {
+		$datos['pagina'] = 'Alta de pelicula';
+		return view('pelicula-alta')->with($datos);
+	}
 
+	//listado de peliculas (usa el metodo consulta() del modelo)
+	public function consultaPeliculas() {
+		$datos['peliculas'] = Pelicula::consulta(); //ordenado por titulo
+		$datos['pagina'] = 'Lista de peliculas';
+		
 		//'dd' nos muestra en el navegador el contenido de la
 		// variable transformada a array
-//		dd($datos['peliculas']->toArray());  // DEBUG
+		//dd($datos['peliculas']->toArray());  // DEBUG
 
 		return view('peliculas')->with($datos);
 	}
 
+	//detalle de una pelicula
 	public function consultaPelicula($id) {
-		return view('pelicula');
+		$pelicula = Pelicula::find($id);
+		$datos['pelicula'] = $pelicula;
+		$datos['pagina'] = 'Detalle de pelicula';
+    	return view('pelicula')->with($datos);
 	}
 
-	public function altaPelicula() {
-		return view('pelicula-alta');
-	}
-
-	public function mantenimientoPelicula($id) {
-		return view('pelicula-mto');
+	//mantenimiento (recibe el objeto Pelicula)
+	public function mantenimientoPelicula(Pelicula $pelicula) {
+		$datos['pelicula'] = $pelicula;
+		$datos['pagina'] = 'Edicion de pelicula';
+		return view('pelicula-mto')->with($datos);
 	}
 }
 

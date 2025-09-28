@@ -28,13 +28,19 @@
                 </div>
             </div>
         </nav>
-        <h4 class="text-center">@yield('subtitle')</h4>
+ <!--       <h4 class="text-center">@yield('subtitle')</h4>   -->
+		<h4 class="text-center">
+			<!--Acepto las dos formas de pasar datos $datos['pagina'] o @section('subtitle')  -->
+		    @isset($pagina)
+		        {{ $pagina }}
+		    @else
+		        @yield('subtitle')
+		    @endisset
+		</h4>
         <hr>
-
         <section id='contenido'>
             @yield('content')
         </section>
-
         <hr>
         <footer>
             <p>&copy; 2023</p>

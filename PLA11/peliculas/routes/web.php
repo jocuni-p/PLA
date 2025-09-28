@@ -42,7 +42,7 @@ Route::get('/pelicula/{id}', [VistasController::class, 'consultaPelicula'])
 Route::get('/pelicula-alta', [VistasController::class, 'altaPelicula'])
 	->name('alta.pelicula');
 
-Route::get('/pelicula-mto/{id}', [VistasController::class, 'mantenimientoPelicula'])
+Route::get('/pelicula-mto/{pelicula}', [VistasController::class, 'mantenimientoPelicula'])
 	->name('mantenimiento.pelicula');
 
 
@@ -53,8 +53,8 @@ Route::get('/pelicula-mto/{id}', [VistasController::class, 'mantenimientoPelicul
 Route::post('/pelicula-alta', [PeliculasController::class, 'alta'])
 	->name('crud.pelicula.alta');
 
-Route::put('/pelicula-mto/{id}', [PeliculasController::class, 'modificacion'])
+Route::put('/pelicula-mto/{pelicula}', [PeliculasController::class, 'modificacion'])
 	->name('crud.pelicula.modificacion');
 
-Route::delete('/pelicula-mto/{id}', [PeliculasController::class, 'baja'])
+Route::delete('/pelicula-mto/{pelicula}', [PeliculasController::class, 'baja'])
 	->name('crud.pelicula.baja');
