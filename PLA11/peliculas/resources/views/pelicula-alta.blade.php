@@ -6,7 +6,8 @@
 @section('content')
 <div class='row animated fadeIn slow'>
     <div class='column col-8'>
-        <form action="" method='post' enctype="multipart/form-data">
+        <!--form action="" method='post' enctype="multipart/form-data"-->
+		<form action="{{route('crud.pelicula.alta')}}" method='post' enctype="multipart/form-data">
             @csrf
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Título</label>
@@ -29,7 +30,8 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Portada</label>
                 <div class="col-sm-10">
-                <input type="file" class="form-control" name="portada" id='portada' accept='image/*'>
+                <!--input type="file" class="form-control" name="portada" id='portada' accept='image/*'-->
+				<input type="file" name="portada" id='portada' accept='image/*' onchange='previsualizar(event)'>
                 </div>
             </div>
             <div class="row mb-3">
