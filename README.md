@@ -6,7 +6,7 @@ Aquí encontrarás todos los trabajos prácticos, ejemplos y proyectos desarroll
 
 - **PHP** en paradigma estructurado y orientado a objetos.
 - **Bases de datos relacionales** con MariaDB.
-- **Frameworks**: CodeIgniter y Laravel.
+- **Frameworks**: Laravel.
 - **Patrones de diseño** como MVC.
 - **Integración de APIs**, pagos con PayPal, generación de PDFs, y despliegue en servidores.
 
