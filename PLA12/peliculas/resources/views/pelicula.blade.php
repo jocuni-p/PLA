@@ -8,12 +8,12 @@
         <div class='column col-8'>
             <div class="card m-auto">
                 <div class="card-body">
-                    <h2 class="card-title">{{ $pelicula->titulo }}</h2>
+                    <h2 class="card-title">{{ $pelicula->titulo ?? null }}</h2>
                     <hr>
-                    <h5 class="card-subtitle mb-2 text-muted">Dirección: {{ $pelicula->direccion }}</h5>
-                    <h5 class="card-subtitle mb-2 text-muted">Año: {{ $pelicula->anio }}</h5>
+                    <h5 class="card-subtitle mb-2 text-muted">Dirección: {{ $pelicula->direccion ?? null }}</h5>
+                    <h5 class="card-subtitle mb-2 text-muted">Año: {{ $pelicula->anio ?? null }}</h5>
                     <hr>
-                    <p class="card-text">{{ $pelicula->sinopsis }}</p>
+                    <p class="card-text">{{ $pelicula->sinopsis ?? null }}</p>
                 </div>
             </div>
             <br>

@@ -70,23 +70,25 @@
     </div>
     <div class="col-4">
     	<!-- Siempre mostrar la imagen basada en la sesión, ignorando JavaScript después del alta -->
-		@php
+<		@php
     		$successData = session('success');
     		$imagenMostrar = 'sinportada.jpg';
 
     		if ($successData && isset($successData['pelicula']) && isset($successData['pelicula']['img'])) {
        			$imagenMostrar = $successData['pelicula']['img'];
     		}
-		@endphp
+		@endphp    
 		<img src='{{ asset("img/" . $imagenMostrar) }}' 
      		alt="previsualizar" 
      		id='previsualizar'
      		style="max-width: 100%; height: auto;">
+
 <!--		@if (isset($pelicula))
 			<img src='{{asset("img/$pelicula->img")}}' alt="previsualizar" id='previsualizar'>
 		@else
 			<img src='{{asset("img/sinportada.jpg")}}' alt="previsualizar" id='previsualizar'>
-		@endif     -->
+		@endif    -->
+		
     </div>
 	{{-- DEBUG TEMPORAL - eliminar después --}}
 	<div style="background: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin: 10px 0;">

@@ -50,10 +50,12 @@ class PeliculasController extends Controller
 
 		// procesamiento de la imagen
 		if ($imagen) {
-			// Método más directo para guardar
+			// Método más directo para guardar (usamos time() para darle un prefijo
+			//unico a cada imagen de forma que cada portada tenga un mombre unico)
 			$nombreArchivo = time() . '_' . $imagen->getClientOriginalName();
 			
-			// Guardar usando el método move() - más confiable
+			//Le decimos a Laravel donde ha de guardar la imagen (/public/img)
+			// Guardar usando el método move()
 			$imagen->move(public_path('img'), $nombreArchivo);
 			
 			// Verificar que se guardó correctamente
