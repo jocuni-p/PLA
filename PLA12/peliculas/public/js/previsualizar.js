@@ -16,3 +16,4 @@ function previsualizar(ev) {
 	// Y a la fuente de la imagen de la sección derecha le ponemos el objectURL
 	caja.src = objectURL;
 }
+
