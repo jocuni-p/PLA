@@ -12,6 +12,8 @@
             @csrf    
 			@method('PUT')
                 <div class="card-body">
+
+					<!-- Campos: titulo, direccion, anio, sinopsis, portada -->
                     <h2 class="card-title">
                         <input name='titulo' type='text' value="{{ old('titulo') ?? $pelicula->titulo ?? '' }}" class="form-control">
                     </h2>
@@ -27,14 +29,10 @@
                     <hr>
                     <input type="file" class="form-control" name="portada" id='portada' accept='image/*'>
                     <hr>
-                    <button type="submit" class="btn btn-warning">Guardar cambios</button>
-				</form>
-				
-				{{-- Formulario para la baja --}}
-				<form action="{{ route('crud.pelicula.baja', [$pelicula->id]) }}" method="POST" style="display:inline" onsubmit="return confirm('¿Seguro que desea eliminar esta película?')">
-					@csrf
-					@method('DELETE')
-					<button type="submit" class="btn btn-danger">Baja película</button>
+
+					<!-- Botones que se convertirán en dinámicos -->
+					<button type="button" class="btn btn-warning" onclick="enviarFormulario('PUT')">Modificar película</button>
+					<button type="button" class="btn btn-danger" onclick="enviarFormulario('DELETE')">Baja película</button>
 				</form>
 				
 				<a href="{{route('consulta.peliculas')}}" class="btn btn-outline-primary btn-block" style='float:right'>Volver a listado</a>
@@ -67,4 +65,26 @@
         <img src='{{ asset("img/" . ($pelicula->img ?? "sinportada.jpg")) }}' alt="previsualizar" id='previsualizar'>
     </div>
 </div>
+<script>
+function enviarFormulario(metodo) {
+    // Cambiar el valor del input oculto _method a PUT o a DELETE
+    document.querySelector('[name=_method]').value = metodo;
+
+    // Cambiar la ruta del formulario según el método para que llame al controlador correcto
+    const accion = (metodo === 'PUT') 
+        ? "{{ route('crud.pelicula.modificacion', [$pelicula->id]) }}" 
+        : "{{ route('crud.pelicula.baja', [$pelicula->id]) }}";
+
+    document.querySelector('#formulario').setAttribute('action', accion);
+
+    // Confirmación antes de borrar (solo si es DELETE)
+    if(metodo === 'DELETE' && !confirm('¿Seguro que desea eliminar esta película?')) {
+        return; // Si cancela, no se envía
+    }
+
+    // Enviar el formulario al servidor
+    document.querySelector('#formulario').submit();
+}
+</script>
+
 @endsection

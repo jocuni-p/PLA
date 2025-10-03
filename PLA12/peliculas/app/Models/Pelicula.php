@@ -31,7 +31,7 @@ class Pelicula extends Model
 	//Si no hubieramos puesto nuestra base 
 	//de datos, Laravel anyadiria las columnas 
 	//de timestamp created_at y updated_at
-	//No actualices las columnas de timestamp.
+	//No actualizar las columnas de timestamp.
 	public $timestamps = false;
 
 	//ALTA

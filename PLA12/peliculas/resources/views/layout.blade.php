@@ -20,15 +20,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 					<div class="navbar-nav">
-						<!--                   <a class="nav-link" href="{{ url('/peliculas') }}">Lista de películas</a>    -->
-						<!--                    <a class="nav-link" href="{{ url('/pelicula-alta') }}">Alta película</a>    -->
 						<a class="nav-link" href="{{route('consulta.peliculas')}}">Lista de películas</a>
                         <a class="nav-link" href="{{route('alta.pelicula')}}">Alta película</a>
                     </div>
                 </div>
             </div>
         </nav>
-		<!--       <h4 class="text-center">@yield('subtitle')</h4>   -->
 		<h4 class="text-center">
 			<!--Acepto las dos formas de pasar datos $datos['pagina'] o @section('subtitle')  -->
 		    @isset($pagina)

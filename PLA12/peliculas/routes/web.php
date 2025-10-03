@@ -3,29 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VistasController;
 use App\Http\Controllers\PeliculasController;
-/*
-Route::get('/', function () {
-    // vista inicio
-    return view('inicio');
-});
-
-Route::get('/peliculas', function () {
-    return view('peliculas');
-});
-
-Route::get('/pelicula/{id}', function ($id) {
-    // para ver detalle de una pelicula
-    return view('pelicula', ['id' => $id]);
-});
-
-Route::get('/pelicula-alta', function () {
-    return view('pelicula-alta');
-});
-
-Route::get('/pelicula-mto', function () {
-    return view('pelicula-mto');
-});
-*/
 
 
 //===RUTAS GET DE CARGA DE VISTAS====//

@@ -16,7 +16,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Título</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" name="titulo" value = "{{ old('titulo', $form_data['titulo'] ?? ($pelicula['titulo'] ?? '')) }}">
+                <input type="text" class="form-control" name="titulo" value ="{{ old('titulo', $form_data['titulo'] ?? ($pelicula['titulo'] ?? '')) }}">
                 </div>
             </div>
             <div class="row mb-3">
@@ -28,14 +28,14 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Año</label>
                 <div class="col-sm-10">
-                <input type="number" class="form-control" name="anio" value = "{{ old('anio', $form_data['anio'] ?? ($pelicula['direccion'] ?? '')) }}">
+                <input type="number" class="form-control" name="anio" value = "{{ old('anio', $form_data['anio'] ?? ($pelicula['anio'] ?? '')) }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Portada</label>
                 <div class="col-sm-10">
-				<input type="file" name="portada" id='portada' accept='image/*' onchange='previsualizar(event)'>
-                </div>
+					<input type="file" name="portada" id='portada' accept='image/*' onchange='previsualizar(event)'>
+				</div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Sinopsis</label>
@@ -54,7 +54,9 @@
 					<ul> 
 						@foreach ($errors->all() as $error) 
 							<li>{{ $error }}</li> 
-						@endforeach 
+						@endforeach
+						{{-- mensaje adicional para recordar lo de la portada --}}
+                		<li>Si quieres una portada, selecciona una imagen.</li> 
 					</ul> 
 				</div>
 			@endif
@@ -70,7 +72,7 @@
     </div>
     <div class="col-4">
     	<!-- Siempre mostrar la imagen basada en la sesión, ignorando JavaScript después del alta -->
-<		@php
+		@php
     		$successData = session('success');
     		$imagenMostrar = 'sinportada.jpg';
 
@@ -78,24 +80,17 @@
        			$imagenMostrar = $successData['pelicula']['img'];
     		}
 		@endphp    
-		<img src='{{ asset("img/" . $imagenMostrar) }}' 
+	
+		<img src="{{ asset('img/' . ($pelicula['img'] ?? 'sinportada.jpg')) }}"
      		alt="previsualizar" 
-     		id='previsualizar'
-     		style="max-width: 100%; height: auto;">
-
-<!--		@if (isset($pelicula))
-			<img src='{{asset("img/$pelicula->img")}}' alt="previsualizar" id='previsualizar'>
-		@else
-			<img src='{{asset("img/sinportada.jpg")}}' alt="previsualizar" id='previsualizar'>
-		@endif    -->
-		
+     		id='previsualizar'>
     </div>
 	{{-- DEBUG TEMPORAL - eliminar después --}}
-	<div style="background: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin: 10px 0;">
+	<!--div style="background: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin: 10px 0;">
     	<h6>DEBUG Session Data:</h6>
     	<pre>@php print_r(session()->all()) @endphp</pre>
     	<p>Película: @php var_dump($pelicula) @endphp</p>
-	</div>
+	</div-->
 </div>
 @endsection
 
