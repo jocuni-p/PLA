@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Pelicula;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\Rule;
+use Exception;
 
 class PeliculasController extends Controller
 {
@@ -98,5 +101,58 @@ class PeliculasController extends Controller
                     'sinopsis' => $datos['sinopsis']
                 ]
             ]);
+	}
+
+	public function modificacion(Pelicula $pelicula, Request $request) {
+
+		try{
+			//dd("ENTRA en modificacion con id: " . $pelicula->id); // DEBUG
+			//recuperamos los datos tipo texto introducidos en el formulario
+			$datos = request()->all();
+			//recuperamos el fichero seleccionado en el formulario
+			$archivo = $request->file('portada');
+
+			//validamos los datos con el metodo validate()
+			$request->validate(['titulo'	=> ['required', Rule::unique('peliculas','titulo')->ignore($pelicula->id)],
+								'direccion' => ['required'],
+								'anio'		=> ['required', 'numeric', 'max:2100', 'min:1900'],
+								'sinopsis'	=> ['required'],
+								'portada'	=> ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:300'],
+			]);
+
+			//si hay fichero(imagen), lo renombramos, lo movemos y lo anyadimos a $datos
+			if ($archivo) {
+            	$nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+            	$archivo->move(public_path('img'), $nombreArchivo);
+            	$datos['portada'] = $nombreArchivo;
+        	}
+			
+			//trasladamos los datos validados a la BD
+			$pelicula->update($datos);
+			
+			//comprobamos si realmente se ha modificado algun dato
+			if(!$pelicula->getChanges()) {
+				throw new Exception('No se ha modificado ningun dato de la pelicula');
+			}
+			
+			$datos['mensaje'] = "Modificacion efectuada";
+
+			//para mantener los datos de la modifica en el formulario,
+			//redireccionamos de nuevo a la ruta de la vista de mantenimiento
+			return redirect()
+            	->route('mantenimiento.pelicula', [$pelicula->id])
+            	->with('success', $datos['mensaje']);
+
+/*		} catch (Exception $e) {
+			//asignamos los errores a $datos //quiza seria mejor devolverlos a la vista ?????????
+			$datos['mensajes'] = $e->getMessage();	
+		} catch (QueryException $e) {
+			$datos['mensaje'] = $e->errorInfo[2];
+		}   */
+		} catch (Exception $e) {
+    		return back()->withErrors(['error' => $e->getMessage()]);
+		} catch (QueryException $e) {
+    		return back()->withErrors(['error' => $e->errorInfo[2]]);
+		}
 	}
 }
