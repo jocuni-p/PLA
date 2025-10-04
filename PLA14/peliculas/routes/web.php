@@ -48,15 +48,15 @@ Route::delete('/pelicula-mto/{pelicula}', [PeliculasController::class, 'baja'])
 //=====RUTAS DE AUTENTICACION=======//
 //carga vista login
 Route::get('/login', [AutenticacionSesionController::class, 'vistalogin'])
-	->name('vista.login')
-	->middleware('guest'); // evita que un user authenticado pueda volver al form de login //OJO DUPLICADO
+	->name('vista.login');
+//	->middleware('guest'); // evita que un user authenticado pueda volver al form de login //OJO DUPLICADO
 
 //solicitud del login al pulsar el boton del formulario
 Route::post('/login', [AutenticacionSesionController::class, 'login'])
-	->name('login')
-	->middleware('guest'); //OJO DUPLICADO
+	->name('login');
+//	->middleware('guest'); //OJO DUPLICADO
 
 //ruta desconexion
 Route::post('/logout', [AutenticacionSesionController::class, 'logout'])
-	->name('logout')
-	->middleware('auth'); // protege el cierre de session
+	->name('logout');
+//	->middleware('auth'); // protege el cierre de session
