@@ -60,7 +60,7 @@
         </div>
     </div>
 
-	<!--   Seccion derecha de la pagina con la imagen de portada     -->
+	<!--   Seccion derecha con la imagen de portada     -->
     <div class='column col-4'>
         <img src='{{ asset("img/" . ($pelicula->img ?? "sinportada.jpg")) }}' alt="previsualizar" id='previsualizar'>
     </div>

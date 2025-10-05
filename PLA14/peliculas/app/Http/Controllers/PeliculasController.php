@@ -36,34 +36,20 @@ class PeliculasController extends Controller
 		if ($validator->fails()) { 
 			return redirect()->route('alta.pelicula')->withErrors($validator)->withInput(); 
 		}
-		/*
-		//procesamiento de la imagen
-		if ($imagen) {
-			//si se selecciono una imagen
-			$nombreArchivo = $imagen->getClientOriginalName();
-			//movemos la imagen  a /public/img
-			Storage::putFileAs('', $imagen, $nombreArchivo);
-			//guardamos el nombre en los datos
-			$datos['portada'] = $nombreArchivo;
-		} else { 
-			// si no se selecciono imagen, usamos la por default 'sinportada'
-			$datos['portada'] = 'sinportada.jpg';
-		}
-		*/
 
 		// procesamiento de la imagen
 		if ($imagen) {
-			// Método más directo para guardar (usamos time() para darle un prefijo
-			//unico a cada imagen de forma que cada portada tenga un mombre unico)
+			// Metodo mas directo para guardar. Usamos time() para darle un prefijo
+			//unico a cada imagen de forma que cada portada tenga un mombre unico.
 			$nombreArchivo = time() . '_' . $imagen->getClientOriginalName();
 			
 			//Le decimos a Laravel donde ha de guardar la imagen (/public/img)
 			// Guardar usando el método move()
 			$imagen->move(public_path('img'), $nombreArchivo);
 			
-			// Verificar que se guardó correctamente
+			// Verificar que se guardo correctamente
 			if (!file_exists(public_path('img/' . $nombreArchivo))) {
-				// Si no se guardó, usar imagen por defecto
+				// Si no se guardo, usar imagen por defecto
 				$datos['portada'] = 'sinportada.jpg';
 			} else {
 				$datos['portada'] = $nombreArchivo;
@@ -177,7 +163,7 @@ class PeliculasController extends Controller
         if ($deleted && $nombreImagen != 'sinportada.jpg') {
             $imagenPath = public_path('img/' . $nombreImagen);
             if (file_exists($imagenPath)) {
-                unlink($imagenPath); // borrado físico del archivo
+                unlink($imagenPath); // borrado fisico del archivo
             }
         }
 

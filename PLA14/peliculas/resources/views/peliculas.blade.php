@@ -4,14 +4,15 @@
 @section('subtitle', 'Consulta de todas las peliculas')
 
 @section('content')
-<div class='row animated fadeIn slow'>
+{{-- DE MOMENTO, ESTE FORM DE FILTRO NO APLICA --}}
+<!--div class='row animated fadeIn slow'>
     <form action="" class="d-flex justify-content-center">
         <div class="m-3">
             <label class="form-label">Buscar por título:</label>
             <input autofocus type="search" class="form-control" id="filtro"  name="filtro" value="">
         </div>
     </form>
-</div>
+</div-->
 <hr>
 <div class="row row-cols-4 d-flex justify-content-evenly">
     @forelse ($peliculas as $pelicula)

@@ -27,26 +27,16 @@
 					</div>
 
 					{{-- Zona derecha: login / usuario --}}
-					<!--div class="d-flex align-items-center">
-						@guest
-							<a class="nav-link" href="{{ route('vista.login') }}">Login</a>
-							<span>SOY UN INVITADO</span>
-							@endguest
-						@auth
-							<span class="navbar-text text-white ms-2">
-								{{ Auth::user()->nombre }}
-							</span>
-						@endauth
-                    </div-->
-					<!-- A la derecha -->
 					<div class="navbar-nav ms-auto">
 						@guest
 							<a class="nav-link" href="{{route('vista.login')}}">Login</a>
 						@endguest
-
 						@auth
-							<span class="navbar-text text-white me-2">{{ Auth::user()->nombre }}</span>
-							<a class="nav-link" href="{{ route('logout') }}">Logout</a>
+    						<span class="navbar-text text-white me-2">{{ Auth::user()->nombre }}</span>
+    						<form method="POST" action="{{ route('logout') }}" class="d-inline">
+        						@csrf
+        						<a class="nav-link" href="#" onclick="this.closest('form').submit()">Logout</a>
+    						</form>
 						@endauth
 					</div>
                 </div>

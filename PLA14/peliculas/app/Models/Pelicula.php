@@ -25,12 +25,8 @@ class Pelicula extends Model
 		return self::orderBy('titulo')->get();
 	}
 
-	//Laravel, si no especificamos lo contrario, por defecto
-	// considera que la clave primaria PK se llama 'id'
-
-	//Si no hubieramos puesto nuestra base 
-	//de datos, Laravel anyadiria las columnas 
-	//de timestamp created_at y updated_at
+	//Si no hubieramos puesto nuestra base de datos, Laravel anyadiria
+	// las columnas de timestamp created_at y updated_at.
 	//No actualizar las columnas de timestamp.
 	public $timestamps = false;
 
