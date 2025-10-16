@@ -98,11 +98,11 @@
      		id='previsualizar'>
     </div>
 	{{-- DEBUG TEMPORAL - eliminar después --}}
-	<!--div style="background: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin: 10px 0;">
+	<div style="background: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin: 10px 0;">
     	<h6>DEBUG Session Data:</h6>
     	<pre>@php print_r(session()->all()) @endphp</pre>
     	<p>Vehículo: @php var_dump($auto) @endphp</p>
-	</div-->
+	</div>
 </div>
 @endsection
 

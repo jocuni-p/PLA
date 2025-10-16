@@ -12,7 +12,12 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     
-	public function run() {
-		$this->call([AutoSeeder::class]);
-	}
+	public function run(): void
+    {
+        $this->call([
+            CategoriaSeeder::class, // Primero categorías
+            AutoSeeder::class,      // Luego autos
+        ]);
+    }
 }
+

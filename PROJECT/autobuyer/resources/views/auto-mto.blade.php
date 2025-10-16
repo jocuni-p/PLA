@@ -8,7 +8,7 @@
     <div class='column col-8'>
         <div class="card m-auto">
             @if (isset($auto))
-            <form id='formulario' action="{{ route('crud.auto.modificacion', [old('id') ?? $->id ?? null]) }}" method="POST" enctype="multipart/form-data">
+            <form id='formulario' action="{{ route('crud.auto.modificacion', [old('id') ?? $auto->id ?? null]) }}" method="POST" enctype="multipart/form-data">
             @csrf    
 			@method('PUT')
                 <div class="card-body">

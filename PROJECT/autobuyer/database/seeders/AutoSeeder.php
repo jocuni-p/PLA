@@ -11,7 +11,12 @@ class AutoSeeder extends Seeder
 {
     public function run()
     {
-		Auto::truncate(); //borra todos los registros y reinicia a 0 el id autoincremental
+
+		//Envuelvo el truncate para poder desactivar las restricciones de la FK y que se pueda borrar los datos
+		DB::statement('SET FOREIGN_KEY_CHECKS=0;'); // 🔸 Desactiva FK
+		//borra todos los registros y reinicia a 0 el id autoincremental
+		Auto::truncate(); //limpia todos los datos
+		DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // 🔸 Reactiva FK
 		
 		//Opcion A: creo algunos registros con nombres reales
         DB::table('autos')->insert([
@@ -22,6 +27,7 @@ class AutoSeeder extends Seeder
                 'anio' => 2019,
                 'kilometros' => 35000,
                 'combustible' => 'gasolina',
+				'img' => 'sinportada.jpg',
                 'fecha_alta' => now(),
                 'idcategoria' => 1,
             ],
@@ -32,6 +38,7 @@ class AutoSeeder extends Seeder
                 'anio' => 2020,
                 'kilometros' => 22000,
                 'combustible' => 'diesel',
+				'img' => 'sinportada.jpg',
                 'fecha_alta' => now(),
                 'idcategoria' => 2,
             ],
@@ -42,6 +49,7 @@ class AutoSeeder extends Seeder
                 'anio' => 2021,
                 'kilometros' => 12000,
                 'combustible' => 'electrico',
+				'img' => 'sinportada.jpg',
                 'fecha_alta' => now(),
                 'idcategoria' => 3,
             ],
@@ -54,6 +62,7 @@ class AutoSeeder extends Seeder
                 'combustible' => 'gasolina',
                 'fecha_alta' => now(),
                 'idcategoria' => 1,
+				'img' => 'sinportada.jpg',
             ],
             [
                 'marca' => 'Audi',
@@ -62,6 +71,7 @@ class AutoSeeder extends Seeder
                 'anio' => 2020,
                 'kilometros' => 28000,
                 'combustible' => 'hibrido',
+				'img' => 'sinportada.jpg',
                 'fecha_alta' => now(),
                 'idcategoria' => 5,
             ],
