@@ -12,32 +12,33 @@
             @csrf    
 			@method('PUT')
                 <div class="card-body">
-
+					
+					
 					<!-- Campos: marca, modelo, precio, año, km, combustible, portada -->
-                    <h2 class="card-title">
-                        <input name='marca' type='text' value="{{ old('marca') ?? $auto->marca ?? '' }}" class="form-control">
-                    </h2>
-                    <hr>
+                    <h5 class="card-title mb-2 text-muted">Marca:
+						<input name='marca' type='text' value="{{ old('marca') ?? $auto->marca ?? '' }}" class="form-control">
+                    </h5>
+                    <!--hr-->
                     <h5 class="card-subtitle mb-2 text-muted">Modelo:
-                        <input name='direccion' value="{{ old('modelo') ?? $auto->modelo ?? '' }}" class="form-control">
+						<input name='modelo' value="{{ old('modelo') ?? $auto->modelo ?? '' }}" class="form-control">
                     </h5>
                     <h5 class="card-subtitle mb-2 text-muted">Precio:
-                        <input name='precio' value="{{ old('precio') ?? $auto->precio ?? '' }}" class="form-control">
+						<input name='precio' value="{{ old('precio') ?? $auto->precio ?? '' }}" class="form-control">
                     </h5>
                     <h5 class="card-subtitle mb-2 text-muted">Año:
-                        <input name='anio' type='number' min='2000' max='2050' value="{{ old('anio') ?? $auto->anio ?? '' }}" class="form-control">
+						<input name='anio' type='number' min='2000' max='2050' value="{{ old('anio') ?? $auto->anio ?? '' }}" class="form-control">
                     </h5>
                     <h5 class="card-subtitle mb-2 text-muted">Kilometros:
-                        <input name='kilometros' value="{{ old('kilometros') ?? $auto->kilometros ?? '' }}" class="form-control">
+						<input name='kilometros' value="{{ old('kilometros') ?? $auto->kilometros ?? '' }}" class="form-control">
                     </h5>
                     <h5 class="card-subtitle mb-2 text-muted">Combustible:
-                        <input name='combustible' value="{{ old('combustible') ?? $auto->combustible ?? '' }}" class="form-control">
+						<input name='combustible' value="{{ old('combustible') ?? $auto->combustible ?? '' }}" class="form-control">
                     </h5>
                     <input type="file" class="form-control" name="portada" id='portada' accept='image/*'>
                     <hr>
-
+					
 					<!-- Botones que se convertirán en dinámicos -->
-					<button type="button" class="btn btn-warning" onclick="enviarFormulario('PUT')">Modificar vehículo</button>
+					<button type="button" class="btn btn-warning" onclick="enviarFormulario('PUT')">Guardar modificación</button>
 					<button type="button" class="btn btn-danger" onclick="enviarFormulario('DELETE')">Baja vehículo</button>
 				</form>
 				
@@ -49,23 +50,23 @@
 				<a href="{{route('consulta.autos')}}" class="btn btn-outline-primary">Volver a listado</a>
 			</div>
             @endif
-
 			<!--  Seccion para mostrar los errores de validacion, mensajes error Eloquent o mensaje de exito   -->
-			@error('titulo')
-				<div class="alert alert-danger" role="alert">
-					{{ $message }}
+			@if ($errors->any())
+				<div class="alert alert-danger">
+					@foreach ($errors->all() as $error)
+						<div>• {{ $error }}</div>
+					@endforeach
 				</div>
-			@enderror
+			@endif
 			@if (session('success'))
 				<div class="alert alert-success">
 					<p>{{ session('success') }}</p>
 				</div>
 			@endif
-
 			<br>
+
         </div>
     </div>
-
 	<!--   Seccion derecha con la imagen de portada     -->
     <div class='column col-4'>
         <img src='{{ asset("img/" . ($auto->img ?? "sinportada.jpg")) }}' alt="previsualizar" id='previsualizar'>

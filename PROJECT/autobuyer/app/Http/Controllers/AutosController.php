@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\Storage;
 use App\Models\Auto;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
-use Illuminate\Validation\Rule;
+//use Illuminate\Validation\Rule;
 use Exception;
 
 class AutosController extends Controller
@@ -96,18 +97,17 @@ class AutosController extends Controller
 	}
 
 	public function modificacion(Auto $auto, Request $request) {
-		try{
-			//dd("ENTRA en modificacion con id: " . $auto->id); // DEBUG
-			
+		try{			
 			//recuperamos los datos tipo texto introducidos en el formulario
 			$datos = request()->all();
+
 			//recuperamos el fichero seleccionado en el formulario
 			$archivo = $request->file('portada');
 
 			//validamos los datos con el metodo validate()
-			$request->validate(['marca'			=> ['required', Rule::unique('autos','marca')->ignore($auto->id)],
+			$request->validate(['marca'			=> ['required'], //, Rule::unique('autos','marca')->ignore($auto->id)],
 								'modelo' 		=> ['required'],
-								'precio'		=> ['required|numeric'],
+								'precio'		=> ['required', 'numeric'],
 								'anio'			=> ['required', 'numeric', 'max:2050', 'min:2000'],
 								'kilometros'	=> ['required'],
 								'combustible'	=> ['required'],
@@ -151,10 +151,12 @@ class AutosController extends Controller
             	->route('mantenimiento.auto', [$auto->id])
             	->with('success', $datos['mensaje']);
 
-		} catch (Exception $e) {
-    		return back()->withErrors(['error' => $e->getMessage()]);
+		} catch (ValidationException $e) {
+			throw $e;
 		} catch (QueryException $e) {
     		return back()->withErrors(['error' => $e->errorInfo[2]]);
+		} catch (Exception $e) {
+    		return back()->withErrors(['error' => $e->getMessage()]);
 		}
 	}
 
