@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Auto;
+use App\Models\Categoria;
 
 class VistasController extends Controller
 {
@@ -15,6 +16,7 @@ class VistasController extends Controller
 
 	//carga formulario de alta
 	public function altaAuto() {
+		$datos['categorias'] = Categoria::consulta();
 		$datos['pagina'] = 'Alta de vehiculo';
 		return view('auto-alta')->with($datos);
 	}
@@ -43,6 +45,8 @@ class VistasController extends Controller
 
 	//mantenimiento (recibe el objeto Auto)
 	public function mantenimientoAuto(Auto $auto) {
+		//consultar todas las categorias de la tabla
+		$datos['categorias'] = Categoria::consulta();
 		//asignamos el objeto de consulta al array de datos a enviar a la vista
 		$datos['auto'] = $auto;
 		//cargamos la vista de mantenimiento pasando los datos del vehiculo

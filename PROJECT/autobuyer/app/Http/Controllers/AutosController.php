@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 //use Illuminate\Support\Facades\Storage;
 use App\Models\Auto;
+use App\Models\Categoria;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 //use Illuminate\Validation\Rule;
@@ -14,6 +15,9 @@ use Exception;
 class AutosController extends Controller
 {
 	public function alta(Request $request) {
+
+		//dd($request->all()); //DEBUG
+
 		//recuperamos los datos introducidos en el formulario
 		$datos = request()->all();
 
@@ -28,16 +32,24 @@ class AutosController extends Controller
 			'anio'			=> 'required|numeric|min:2000|max:2050',
 			'kilometros'	=> 'required',
 			'combustible'	=> 'required',
-			'portada'		=> 'sometimes|image|mimes:jpg,jpeg,png|max:300'
+			'portada'		=> 'sometimes|image|mimes:jpg,jpeg,png|max:300',
+			'idcategoria'	=> 'required'
+		);
+
+		//mensajes de validación personalizados
+		$messages = array(
+			'idcategoria.required' => 'Se debe seleccionar una categoría'
 		);
 
 		//validacion
-		$validator = Validator::make($datos, $rules);
+		$validator = Validator::make($datos, $rules, $messages);
 
 		//si hubo algun error en las validaciones vuelve a cargar la 
 		//vista de alta con los mismos datos mostrando los mensajes de error
 		if ($validator->fails()) { 
-			return redirect()->route('alta.auto')->withErrors($validator)->withInput(); 
+			return redirect()->route('alta.auto')
+						->withErrors($validator)
+						->withInput(); 
 		}
 
 		// procesamiento de la imagen
@@ -111,7 +123,8 @@ class AutosController extends Controller
 								'anio'			=> ['required', 'numeric', 'max:2050', 'min:2000'],
 								'kilometros'	=> ['required'],
 								'combustible'	=> ['required'],
-								'portada'		=> ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:300']
+								'portada'		=> ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:300'],
+								'idcategoria'	=> ['required']
 			]);
 
 			if ($archivo) {
@@ -144,6 +157,9 @@ class AutosController extends Controller
 			}
 			
 			$datos['mensaje'] = "Modificacion efectuada";
+
+			//consultar todas las categorias dela tabla
+			$datos['categorias'] = Categoria::consulta();
 
 			//para mantener los datos de la modifica en el formulario,
 			//redireccionamos de nuevo a la ruta de la vista de mantenimiento

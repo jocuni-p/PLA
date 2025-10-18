@@ -14,11 +14,26 @@
                 <div class="card-body">
 					
 					
-					<!-- Campos: marca, modelo, precio, año, km, combustible, portada -->
+					<!-- Campos: marca, categoria, modelo, precio, año, km, combustible, portada -->
                     <h5 class="card-title mb-2 text-muted">Marca:
 						<input name='marca' type='text' value="{{ old('marca') ?? $auto->marca ?? '' }}" class="form-control">
                     </h5>
                     <!--hr-->
+					<div class="row mb-3">
+						<label class="col-sm-3 col-form-label">
+							<h5 class="card-subtitle mb-2 text-muted">Categoría</h5>
+						</label>
+						<div class="col-sm-9">
+							<select class="form-select" name="idcategoria" aria-label="Categorias">
+									@foreach ($categorias as $categoria)
+										<option value="{{ $categoria->id }}"
+											{{ old('idcategoria', $auto->idcategoria ?? 1) == $categoria->id ? 'selected' : '' }}>
+											{{ $categoria->nombre }}
+										</option>
+									@endforeach
+							</select> 
+						</div> 
+					</div>
                     <h5 class="card-subtitle mb-2 text-muted">Modelo:
 						<input name='modelo' value="{{ old('modelo') ?? $auto->modelo ?? '' }}" class="form-control">
                     </h5>

@@ -19,7 +19,8 @@ class Auto extends Model
 		'anio',
 		'kilometros',
 		'combustible',
-		'img'
+		'img',
+		'idcategoria'
 	];
 
 	//CONSULTA: metodo para devolver los vehículos ordenados por marca
@@ -41,7 +42,8 @@ class Auto extends Model
 			'anio'			=> $datos['anio'],
 			'kilometros'	=> $datos['kilometros'],
 			'combustible'	=> $datos['combustible'],
-			'img'			=> $datos['portada']
+			'img'			=> $datos['portada'],
+			'idcategoria' 	=> $datos['idcategoria']
 		]);
 	}
 }

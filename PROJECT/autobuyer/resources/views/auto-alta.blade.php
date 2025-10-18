@@ -19,6 +19,28 @@
                 <input type="text" class="form-control" name="marca" value ="{{ old('marca', $form_data['marca'] ?? ($auto['marca'] ?? '')) }}">
                 </div>
             </div>
+			<div class="row mb-3">
+				<label class="col-sm-2 col-form-label">Categoría</label>
+				<div class="col-sm-10">
+					<!--select class="form-select" name="idcategoria" aria-label="Categorias">
+						@foreach ($categorias as $categoria) 
+							@if ((old('idcategoria') ?? $auto->idcategoria ?? null) == $categoria->id)
+								<option selected value='{{$categoria->id}}'>{{$categoria->nombre}}</option>
+							@else 
+								<option value='{{$categoria->id}}'>{{$categoria->nombre}}</option> 
+							@endif 
+						@endforeach
+					</select-->
+					<select class="form-select" name="idcategoria" aria-label="Categorias">
+						@foreach ($categorias as $categoria)
+							<option value="{{ $categoria->id }}"
+								{{ old('idcategoria', 1) == $categoria->id ? 'selected' : '' }}>
+								{{ $categoria->nombre }}
+							</option>
+						@endforeach
+					</select>
+				</div> 
+			</div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Modelo</label>
                 <div class="col-sm-10">
