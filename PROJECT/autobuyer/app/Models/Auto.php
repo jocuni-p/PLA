@@ -24,9 +24,22 @@ class Auto extends Model
 	];
 
 	//CONSULTA: metodo para devolver los vehículos ordenados por marca
-	public static function consulta() {
-		return self::orderBy('marca')->get();
+	//public static function consulta() {
+	//	return self::orderBy('marca')->get();
+	public static function consulta($filtro=null, $idcategoria=null) 
+	{ 
+		if ($idcategoria) { 
+			return Auto::where('marca', 'like' , "%$filtro%")
+					->where('idcategoria', $idcategoria)
+					->orderBy('marca')
+					->get(); 
+		} else {
+			return Auto::where('marca', 'like' , "%$filtro%")
+					->orderBy('marca')
+					->get();
+		}
 	}
+
 
 	//Si no hubieramos puesto nuestra base de datos, Laravel anyadiria
 	// las columnas de timestamp created_at y updated_at.

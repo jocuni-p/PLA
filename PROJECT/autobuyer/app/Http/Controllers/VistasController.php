@@ -22,15 +22,29 @@ class VistasController extends Controller
 	}
 
 	//listado de peliculas (usa el metodo consulta() del modelo)
-	public function consultaAutos() {
-		$datos['autos'] = Auto::consulta(); //ordenado por titulo
-		$datos['pagina'] = 'Lista de vehiculos';
-		
+	public function consultaAutos(Request $request) {
+
+		// Recuperamos los filtros desde el formulario (método GET)
+    	$filtro = $request->input('filtro');  // texto de búsqueda por marca
+    	$idcategoria = $request->input('idcategoria'); // id de categoría seleccionada
+
+		// Llamamos al metodo del modelo pasándole los filtros
+		$datos['autos'] = Auto::consulta($filtro, $idcategoria);
+
+		// Cargamos todas las categorías para el combo
+		$datos['categorias'] = Categoria::consulta();
+
+		// Guardamos los filtros para mantenerlos en la vista
+		$datos['filtro'] = $filtro;
+		$datos['idcategoria'] = $idcategoria;
+		$datos['pagina'] = 'Lista de vehículos';
+
 		//'dd' nos muestra en el navegador el contenido de la
 		// variable transformada a array
 		//dd($datos['autos']->toArray());  // DEBUG
-
+		
 		return view('autos')->with($datos);
+
 	}
 
 	//detalle de un vehiculo
@@ -39,6 +53,12 @@ class VistasController extends Controller
 		$auto = Auto::find($id);
 		$datos['auto'] = $auto;
 		//cargamos la vista de detalle cargando los datos del vehiculo
+
+		//recuperar el nombre de la categoría a partir de la clave foránea 
+		//que tenemos en la tabla autos
+		//a partir de la clave foránea realizaremos una consulta al modelo Categoria
+		$auto->categoria = Categoria::find($auto->idcategoria)->nombre;
+
 		$datos['pagina'] = 'Detalle del vehiculo';
     	return view('auto')->with($datos);
 	}

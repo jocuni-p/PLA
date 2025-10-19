@@ -10,6 +10,7 @@
                 <div class="card-body">
                     <h2 class="card-title">{{ $auto->marca ?? null }}</h2>
                     <hr>
+					<h5 class="card-subtitle mb-2 text-muted">Categoría: {{$auto->categoria ?? null}}</h5>
                     <h5 class="card-subtitle mb-2 text-muted">Modelo: {{ $auto->modelo ?? null }}</h5>
 					<h5 class="card-subtitle mb-2 text-muted">Precio: {{ $auto->precio ?? null }}</h5>
 					<h5 class="card-subtitle mb-2 text-muted">Año: {{ $auto->anio ?? null }}</h5>

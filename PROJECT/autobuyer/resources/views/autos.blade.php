@@ -5,14 +5,28 @@
 
 @section('content')
 {{-- DE MOMENTO, ESTE FORM DE FILTRO NO APLICA --}}
-<!--div class='row animated fadeIn slow'>
+<div class='row animated fadeIn slow'>
     <form action="" class="d-flex justify-content-center">
         <div class="m-3">
-            <label class="form-label">Buscar por título:</label>
+            <label class="form-label">Buscar por marca:</label>
             <input autofocus type="search" class="form-control" id="filtro"  name="filtro" value="">
         </div>
+		<div class="m-3">
+			<label class="form-label">Categoría:</label>
+			<select class="form-select" name="idcategoria" onchange="this.form.submit()">
+				<option value="">Todas las categorías</option>
+				@foreach ($categorias as $categoria) 
+					@if (($idcategoria ?? null) == $categoria->id)
+						<option selected value='{{$categoria->id}}'>{{$categoria->nombre}}</option>
+					@else 
+						<option value='{{$categoria->id}}'>{{$categoria->nombre}}</option> 
+					@endif 
+				@endforeach 
+			</select>
+		</div>
     </form>
-</div-->
+</div>
+
 <!--hr-->
 
 <div class="row row-cols-4 d-flex justify-content-evenly">
