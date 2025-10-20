@@ -21,7 +21,7 @@ class VistasController extends Controller
 		return view('auto-alta')->with($datos);
 	}
 
-	//listado de peliculas (usa el metodo consulta() del modelo)
+	//listado de autos (usa el metodo consulta() del modelo)
 	public function consultaAutos(Request $request) {
 
 		// Recuperamos los filtros desde el formulario (método GET)

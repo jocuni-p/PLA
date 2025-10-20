@@ -24,8 +24,6 @@ class Auto extends Model
 	];
 
 	//CONSULTA: metodo para devolver los vehículos ordenados por marca
-	//public static function consulta() {
-	//	return self::orderBy('marca')->get();
 	public static function consulta($filtro=null, $idcategoria=null) 
 	{ 
 		if ($idcategoria) { 

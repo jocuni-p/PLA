@@ -90,7 +90,7 @@ div#altacategoria {
 
 .resaltar {font-size: 1.3em;}
 
-/* Caja de autos más ancha y menos alta */
+/* Caja de la vista 'Lista de vehiculos' más ancha y menos alta */
 .auto-card {
     width: 250px;       /* un poco más ancha que por defecto */
 }
@@ -98,8 +98,8 @@ div#altacategoria {
 /* Imagen apaisada, ajustada al ancho de la tarjeta */
 .auto-img {
     width: 100%;
-    height: 140px;      /* menos alta que antes */
-    object-fit: cover;  /* recorta y mantiene proporción apaisada */
+    height: 140px;    
+    object-fit: cover; 
 }
 
 /* Precio destacado */

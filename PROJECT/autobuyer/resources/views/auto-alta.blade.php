@@ -22,15 +22,6 @@
 			<div class="row mb-3">
 				<label class="col-sm-2 col-form-label">Categoría</label>
 				<div class="col-sm-10">
-					<!--select class="form-select" name="idcategoria" aria-label="Categorias">
-						@foreach ($categorias as $categoria) 
-							@if ((old('idcategoria') ?? $auto->idcategoria ?? null) == $categoria->id)
-								<option selected value='{{$categoria->id}}'>{{$categoria->nombre}}</option>
-							@else 
-								<option value='{{$categoria->id}}'>{{$categoria->nombre}}</option> 
-							@endif 
-						@endforeach
-					</select-->
 					<select class="form-select" name="idcategoria" aria-label="Categorias">
 						@foreach ($categorias as $categoria)
 							<option value="{{ $categoria->id }}"

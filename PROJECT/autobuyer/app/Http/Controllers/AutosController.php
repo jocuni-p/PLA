@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-//use Illuminate\Support\Facades\Storage;
 use App\Models\Auto;
 use App\Models\Categoria;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
-//use Illuminate\Validation\Rule;
 use Exception;
 
 class AutosController extends Controller
@@ -117,7 +115,7 @@ class AutosController extends Controller
 			$archivo = $request->file('portada');
 
 			//validamos los datos con el metodo validate()
-			$request->validate(['marca'			=> ['required'], //, Rule::unique('autos','marca')->ignore($auto->id)],
+			$request->validate(['marca'			=> ['required'],
 								'modelo' 		=> ['required'],
 								'precio'		=> ['required', 'numeric'],
 								'anio'			=> ['required', 'numeric', 'max:2050', 'min:2000'],
