@@ -11,20 +11,22 @@
 
 	
     <br>
-    <form action="" method="get">
+	<form action="{{ route('consultapacientes') }}" method="get">
 		<div class="mb-3">
 			<label class="form-label">Pacientes a mostrar:</label>
             <select class="form-select" name="mostrar" onchange="this.form.submit()">
-				<option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
+				<option value="5"  @selected($mostrar == 5)>5</option>
+				<option value="10" @selected($mostrar == 10)>10</option>
+				<option value="20" @selected($mostrar == 20)>20</option>
+				<option value="50" @selected($mostrar == 50)>50</option>
             </select>
         </div>
-        <div class="mb-3">
+		{{-- Filtro alfabetico --}}
+		<div class="mb-3">
 			<label class="form-label">Buscar por apellido:</label>
-            <input type="search" class="form-control" id="filtro"  name="filtro" onkeyup="this.form.submit()">
-        </div>
+			<input type="search" class="form-control" name="filtro"
+			 value="{{ $filtro ?? null }}" onkeyup="this.form.submit()">
+		</div> 
     </form>
     <br>
 	@empty ($pacientes)

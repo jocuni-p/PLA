@@ -31,8 +31,6 @@
             <input type="date" class="form-control" id="fechaalta"  name="fechaalta" value="{{ old('fechaalta') ?? $paciente->fechaalta ?? null }}">
         </div>
         <br>
-		
-        <!--button type="button" id="modificacion" name="modificacion" class="btn btn-primary">Modificar paciente</button-->
 		<button type="button" id="modificacion" name="modificacion" class="btn btn-primary" onclick="enviarFormulario('PUT')">Modificar paciente</button>
         <button type="button" id="baja" name="baja" class="btn btn-danger" onclick="enviarFormulario('DELETE')">Baja paciente</button>
 		{{-- Mensajes de validacion de la clase validator (error y/o exito) --}}

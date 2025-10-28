@@ -18,8 +18,6 @@ class Paciente extends Model
 		'fechaalta'
 	];
 
-
-
 	//ALTA. Metodo de alta del paciente en la BD
 	public static function alta($datos) {
 		$paciente = Paciente::create([
@@ -33,7 +31,7 @@ class Paciente extends Model
 	}
 
 	// CONSULTA: consulta pacientes filtrados, limitados y ordenados
-    public static function consulta($filtro = null, $limit = 5) //limit ha de ser cambiable por el combo
+    public static function consulta($filtro = '', $limit = 5) //limit ha de ser cambiable por el combo
     {
         $query = self::query();
 
@@ -51,5 +49,4 @@ class Paciente extends Model
         // Obtener resultados
         return $query->get();
     }
-
 }

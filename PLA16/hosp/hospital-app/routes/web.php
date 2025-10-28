@@ -5,11 +5,6 @@ use App\Http\Controllers\VistasController;
 use App\Http\Controllers\PacienteController;
 
 
-// Route::get('/', function () {
-//     return view('home');
-// });
-
-
 //===RUTAS GET DE CARGA DE VISTAS====//
 //Las rutas GET cargan plantillas Blade (las vistas).
 //Algunas rutas estan protegidas 'auth' para usuarios logeados

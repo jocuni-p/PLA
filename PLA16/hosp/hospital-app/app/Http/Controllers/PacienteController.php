@@ -37,29 +37,16 @@ class PacienteController extends Controller
 		// );
 
 		//usaremos la clase Validator de Laravel para validar los datos del form
-		//$validator = Validator::make($paciente, $rules, $messages);
 		$validator = Validator::make($paciente, $rules);
 
 		//La clase Validator nos entregara un array con todos los errores que haya
 		if($validator->fails()) {
-			dd($validator); //DEBUG
+			//dd($validator); //DEBUG
 			//si hubo error recargamos la vista con todos sus datos (withinput) y los mensajes de error (obj validator)
 			return redirect('alta')
 					->withErrors($validator)
 					->withinput();
 		}
-
-		//Si no hubo ningun error en la validacion de datos, 
-		//daremos de alta el paciente en la BD usando el modelo Paciente y
-		//asignamos los datos del paciente al array $datos para poder volver a cargarlos en la vista
-		// $datos['paciente'] = Paciente::create([
-		// 	'nif'			=> $paciente['nif'],
-		// 	'nombre'		=> $paciente['nombre'],
-		// 	'apellidos'		=> $paciente['apellidos'],
-		// 	'fechaingreso'	=> $paciente['fechaingreso'],
-		// 	'fechaalta'		=> null
-		// ]);
-		//MEJOR USAREMOS UN METODO DE ALTA DENTRO DEL MODELO PACIENTE
 
 		//si no hubo ningun error en la validacion, llamamos al metodo 
 		//'alta' que tenemos en el modelo 'Paciente' que creara el alta en la BD.
@@ -76,18 +63,23 @@ class PacienteController extends Controller
 
 	//CONSULTA TODOS
 	public function consultapacientes() {
-		//recuperamos todos los pacientes utilizando el metodo 
-		//del modelo Paciente, que devuelve los pacientes ordenados 
-		//por nombre y apellidos
-		$datos['pacientes'] = Paciente::consulta();
+		// Recuperar el filtro y el limite
+    	$filtro = request('filtro', '');
+    	$limit = request('mostrar', 5); // valor por defecto 5
 
-		//cargamos la vista de consulta pacientes y veremos la tabla
-		return view('consulta')->with($datos);
+    	// Obtener los pacientes con filtro y limite
+    	$pacientes = Paciente::consulta($filtro, $limit);
+
+    	// Pasar los datos a la vista
+    	return view('consulta', [
+        	'pacientes' => $pacientes,
+        	'filtro' => $filtro,
+        	'mostrar' => $limit
+    	]);
 	}
 
 	//CONSULTA UNO
 	public function consultapaciente($idpaciente = null) {
-
 		//si no llega ningun paciente, enviaremos mensaje de error
 		//y sino realizaremos la consulta utilizando el modelo
 		if (!$idpaciente) { 
@@ -102,20 +94,17 @@ class PacienteController extends Controller
 	//MODIFICACION
 	public function modificacion(Request $request, Paciente $paciente) {  //Request $request
 		try {
-
 			//recuperamos los datos introducidos en el form
 			$datos = request()->all();
 
 			//definimos las reglas de validacion para la clase 'Validator'
-		$rules = array(
-			//'nif'			=> 'required|unique:paciente,nif,$paciente->idpaciente',
-			'nif' 			=> ['required', Rule::unique('paciente')->ignore($paciente->idpaciente, 'idpaciente')],
-			'nombre'		=> 'required',
-			'apellidos'		=> 'required',
-			'fechaingreso'	=> 'required'
-		);
+			$rules = array(
+				'nif' 			=> ['required', Rule::unique('paciente')->ignore($paciente->idpaciente, 'idpaciente')],
+				'nombre'		=> 'required',
+				'apellidos'		=> 'required',
+				'fechaingreso'	=> 'required'
+			);
 		//usamos clase Validator para validar los datos del form
-		//$validator = Validator::make($paciente, $rules); ///OJO
 		$validator = Validator::make($datos, $rules); 
 
 		//Si falla algo en las validaciones, la clase Validator nos entregara
@@ -169,7 +158,6 @@ class PacienteController extends Controller
 				}
 
 				//si la baja es ok, redirigimos a la vista de consulta con un mensaje de exito
-				//return redirect("consulta")->with('success', 'Baja efectuada correctamente');
 				return redirect()->route('consultapacientes')->with('success', 'Baja efectuada correctamente');
 
 		
