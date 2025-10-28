@@ -151,30 +151,30 @@ class PeliculasController extends Controller
 	}
 
 	public function baja(Pelicula $pelicula)
-{
-    try {
-        // Guardamos el nombre de la imagen antes de borrar el registro
-        $nombreImagen = $pelicula->img;
+	{
+		try {
+			// Guardamos el nombre de la imagen antes de borrar el registro
+			$nombreImagen = $pelicula->img;
 
-        // Borramos la película de la base de datos
-        $deleted = $pelicula->delete();
+			// Borramos la película de la base de datos
+			$deleted = $pelicula->delete();
 
-        // Si se borró y la imagen no es la por defecto, borramos el archivo
-        if ($deleted && $nombreImagen != 'sinportada.jpg') {
-            $imagenPath = public_path('img/' . $nombreImagen);
-            if (file_exists($imagenPath)) {
-                unlink($imagenPath); // borrado fisico del archivo
-            }
-        }
+			// Si se borró y la imagen no es la por defecto, borramos el archivo
+			if ($deleted && $nombreImagen != 'sinportada.jpg') {
+				$imagenPath = public_path('img/' . $nombreImagen);
+				if (file_exists($imagenPath)) {
+					unlink($imagenPath); // borrado fisico del archivo
+				}
+			}
 
-        // Redirigimos al listado de películas con mensaje de éxito
-        return redirect()->route('consulta.peliculas')->with('success', 'Película eliminada correctamente');
+			// Redirigimos al listado de películas con mensaje de éxito
+			return redirect()->route('consulta.peliculas')->with('success', 'Película eliminada correctamente');
 
-    } catch (Exception $e) {
-        return back()->withErrors(['error' => $e->getMessage()]);
-    } catch (QueryException $e) {
-        return back()->withErrors(['error' => $e->errorInfo[2]]);
-    }
-}
+		} catch (Exception $e) {
+			return back()->withErrors(['error' => $e->getMessage()]);
+		} catch (QueryException $e) {
+			return back()->withErrors(['error' => $e->errorInfo[2]]);
+		}
+	}
 
 }

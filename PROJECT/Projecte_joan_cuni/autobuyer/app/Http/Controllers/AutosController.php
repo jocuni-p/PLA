@@ -71,7 +71,7 @@ class AutosController extends Controller
 			$datos['portada'] = 'sinportada.jpg';
 		}
 
-		//si no hubo ningun error en la validacion, llamamos al metodo 
+		////si no hubo ningun error en la validacion, llamamos al metodo 
 		//'alta' que tenemos en el modelo 'Auto' que creara el alta en la BD.
 		$auto = Auto::alta($datos);
 		
