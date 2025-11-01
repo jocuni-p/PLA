@@ -1,6 +1,7 @@
 # Aplicación web SPA desarrollada con Laravel para la gestión de pacientes de un hospital
 
-El frontend del proyecto es muy básico y poco eleborado porque esta enfocado a la parte backend. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la base de datos de pacientes de forma dinámica en una única página.
+El frontend del proyecto es muy básico y poco eleborado porque esta enfocado a la parte backend. 
+El proyecto permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la base de datos de pacientes de forma dinámica en una única página.
 
 ## Descripción del Proyecto
 
