@@ -42,7 +42,7 @@
 				@endforeach 
 			</ul> 
 			@else 
-				<p>{{ $mensajes ?? null }}</p> 
+				<p>{{ session('mensajes') ?? $mensajes ?? null }}</p> 
 			@endif
 		</h4>
 	</form>

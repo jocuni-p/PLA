@@ -37,7 +37,7 @@
 			</ul> 
 			@else 
 			@if (session('success')) 
-			<p>{{session('success')['mensaje'] ?? null}}</p> 
+			<p>{{session('success')['mensajes'] ?? null}}</p> 
 			@endif 
 			@endif
             

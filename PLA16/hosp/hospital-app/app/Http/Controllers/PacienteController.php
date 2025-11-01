@@ -87,6 +87,10 @@ class PacienteController extends Controller
 		} else { 
 			$datos['paciente'] = Paciente::find($idpaciente); 
 		}
+
+		if (!$datos['paciente']) {
+			$datos['mensajes'] = "Paciente no existe";
+		}
 		//cargamos de nuevo la vista de mantenimiento pasando los datos del paciente
 		return view('mantenimiento')->with($datos);
 	}
@@ -136,8 +140,12 @@ class PacienteController extends Controller
 		return view('mantenimiento')->with($datos);
 
 		} catch (Exception $e ) {
-			$datos['mensajes'] = $e->getMessage();
-			return view('mantenimiento')->with($datos);
+			//$datos['mensajes'] = $e->getMessage();
+			//return view('mantenimiento')->with($datos);
+			//return redirect('mantenimiento')->withinput()->with($e->getMessage());
+			return back()
+				->withInput()
+				->with('mensajes', $e->getMessage());
 		}
 	}
 
