@@ -1,0 +1,23 @@
+
+	<h2>Resetear password</h2>
+	<form id='formulario' method='POST' action="">
+       
+        <div class="mb-3">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email"  name="email">
+        </div>
+       
+        <div class="alert alert-danger" role="alert">
+           
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <button type="submit" id="forgotpassword" name="forgotpassword" class="btn btn-success">Resetear password</button>
+        </div>
+        <br>
+        
+        <div class="alert alert-success" role="success">
+            
+        </div>
+       
+	</form>
