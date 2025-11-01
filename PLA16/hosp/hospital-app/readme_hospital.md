@@ -1,8 +1,8 @@
-# Plataforma Hospital - Gestión de Pacientes
+# Aplicación web SPA desarrollada con Laravel para la gestión de pacientes de un hospital
 
-Aplicación web SPA (Single Page Application) desarrollada con Laravel para la gestión completa de pacientes de un hospital. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la base de datos de pacientes de forma dinámica en una única página.
+El frontend del proyecto es muy básico y poco eleborado porque esta enfocado a la parte backend. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la base de datos de pacientes de forma dinámica en una única página.
 
-## 📋 Descripción del Proyecto
+## Descripción del Proyecto
 
 Esta plataforma permite gestionar el alta, consulta, modificación y baja de pacientes de un hospital. Todas las operaciones se realizan de manera dinámica mediante la carga de componentes, siguiendo el modelo de diseño SPA (Single Page Application).
 
@@ -14,7 +14,7 @@ Esta plataforma permite gestionar el alta, consulta, modificación y baja de pac
 - **Modificación de Pacientes**: Actualización de datos de pacientes existentes
 - **Baja de Pacientes**: Eliminación de pacientes del sistema
 
-## 🚀 Requisitos Previos
+## Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalado:
 
@@ -24,7 +24,7 @@ Antes de comenzar, asegúrate de tener instalado:
 - **XAMPP** (opcional, recomendado para entorno local)
 - **Git** (para clonar el repositorio)
 
-## 📦 Instalación
+## Instalación
 
 ### 1. Clonar el Repositorio
 
@@ -97,7 +97,7 @@ La base de datos debe contener la tabla `paciente` con la siguiente estructura:
 - `fechaingreso` (DATE)
 - `fechaalta` (DATE, Nullable)
 
-## ▶️ Ejecutar la Aplicación
+## Ejecutar la Aplicación
 
 Para iniciar el servidor de desarrollo de Laravel, ejecuta:
 
@@ -115,7 +115,7 @@ Alternativamente, puedes usar XAMPP:
 2. Inicia Apache y MySQL desde el panel de control de XAMPP
 3. Accede a la aplicación desde: **http://localhost/hospital/public**
 
-## 🏗️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 hospital/
@@ -145,7 +145,7 @@ hospital/
 └── .env                                 # Variables de entorno
 ```
 
-## 🛣️ Rutas Principales
+## Rutas Principales
 
 | Método | Ruta | Acción | Descripción |
 |--------|------|--------|-------------|
@@ -159,7 +159,7 @@ hospital/
 | PUT | `/pacientes/{id}` | modificacion | Modificar paciente |
 | DELETE | `/pacientes/{id}` | baja | Baja de paciente |
 
-## 🎯 Validaciones Implementadas
+## Validaciones Implementadas
 
 ### Alta y Modificación
 
@@ -175,7 +175,7 @@ hospital/
 - Se muestran todos los errores de validación simultáneamente
 - Se mantienen los datos del formulario en caso de error
 
-## 🔧 Características Técnicas
+## Características Técnicas
 
 ### Framework y Herramientas
 
@@ -198,7 +198,7 @@ hospital/
 - Sanitización de entradas de usuario
 - Validación de unicidad para NIF
 
-## 🔍 Funcionalidades Detalladas
+## Funcionalidades Detalladas
 
 ### Alta de Pacientes
 
@@ -221,26 +221,18 @@ hospital/
 - Eliminación de pacientes con confirmación
 - Redirección automática tras baja exitosa
 
-## ⚠️ Notas Importantes
+## Notas Importantes
 
 - La tabla `paciente` no sigue las convenciones de Laravel, por lo que se especifica manualmente en el modelo
 - El campo `idpaciente` es la clave primaria (no `id`)
 - Los timestamps están desactivados en el modelo
 - La validación de NIF único excluye el registro actual en modificaciones
 
-## 🔮 Mejoras Futuras (No Implementadas)
-
-- [ ] Paginación de resultados en consulta
-- [ ] Exportación de datos a PDF/Excel
-- [ ] Sistema de autenticación de usuarios
-- [ ] Historial de cambios de pacientes
-- [ ] Búsqueda avanzada con múltiples criterios
-
-## 👨‍💻 Desarrollo
+## Desarrollo
 
 Este proyecto fue desarrollado como parte de la actividad académica "Aplicación SPA con Laravel" del curso de Desarrollo Web BackEnd.
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto es de uso educativo.
 
